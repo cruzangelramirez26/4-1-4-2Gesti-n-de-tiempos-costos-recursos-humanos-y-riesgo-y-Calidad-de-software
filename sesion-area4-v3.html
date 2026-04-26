@@ -1,0 +1,842 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Área 4 · Gestión y Calidad — EGEL Plus</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:ital,wght@0,400;0,500;0,600;1,400&display=swap" rel="stylesheet"/>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#0d0f14;--card:#141720;--card2:#1a1e2a;--border:#232838;
+  --text:#b8bfcc;--text2:#6b7485;--white:#e2e8f0;
+  --green:#34d399;--greenBg:rgba(52,211,153,.08);--greenBorder:rgba(52,211,153,.2);
+  --red:#f87171;--redBg:rgba(248,113,113,.08);--redBorder:rgba(248,113,113,.2);
+  --blue:#60a5fa;--blueBg:rgba(96,165,250,.08);--blueBorder:rgba(96,165,250,.2);
+  --amber:#fbbf24;--amberBg:rgba(251,191,36,.08);--amberBorder:rgba(251,191,36,.2);
+  --purple:#c084fc;--purpleBg:rgba(192,132,252,.08);
+  --indigo:#818cf8;--indigoBg:rgba(129,140,248,.08);--indigoBorder:rgba(129,140,248,.2);
+  --rose:#fb7185;--roseBg:rgba(251,113,133,.08);--roseBorder:rgba(251,113,133,.2);
+  --teal:#2dd4bf;--tealBg:rgba(45,212,191,.08);
+  --nav-bg:rgba(13,15,20,.96);
+  --opt-hover:#1e2232;--scrollbar:#2a3040;--track:#141720;
+  --row-hover:rgba(255,255,255,.012);
+}
+body.light{
+  --bg:#f7f5f0;--card:#fff;--card2:#f0ede6;--border:#ddd8cf;
+  --text:#44403c;--text2:#78716c;--white:#1c1917;
+  --green:#059669;--greenBg:rgba(5,150,105,.07);--greenBorder:rgba(5,150,105,.2);
+  --red:#dc2626;--redBg:rgba(220,38,38,.07);--redBorder:rgba(220,38,38,.2);
+  --blue:#2563eb;--blueBg:rgba(37,99,235,.07);--blueBorder:rgba(37,99,235,.2);
+  --amber:#d97706;--amberBg:rgba(217,119,6,.08);--amberBorder:rgba(217,119,6,.25);
+  --purple:#7c3aed;--purpleBg:rgba(124,58,237,.07);
+  --indigo:#4338ca;--indigoBg:rgba(67,56,202,.07);--indigoBorder:rgba(67,56,202,.2);
+  --rose:#e11d48;--roseBg:rgba(225,29,72,.07);--roseBorder:rgba(225,29,72,.2);
+  --teal:#0d9488;--tealBg:rgba(13,148,136,.07);
+  --nav-bg:rgba(247,245,240,.96);
+  --opt-hover:#faf8f4;--scrollbar:#c5bfb8;--track:#ede9e2;
+  --row-hover:rgba(0,0,0,.018);
+}
+body.light .hdr-outer{background:linear-gradient(135deg,#fffbeb,#fef3c7 50%,#fefce8);border-color:#fde68a;}
+body.light .hdr-outer .hdr-eyebrow{color:#92400e;}
+body.light .hdr-outer h1{color:#78350f;}
+body.light .hdr-outer .hdr-desc{color:#a16207;}
+body.light .narrative-block{background:rgba(217,119,6,.06);border-color:rgba(217,119,6,.2);}
+body.light .narrative-block p{color:#57534e;}
+
+body{background:var(--bg);color:var(--text);font-family:'IBM Plex Sans',sans-serif;line-height:1.7;min-height:100vh}
+::selection{background:var(--amber);color:#000}
+::-webkit-scrollbar{width:5px}::-webkit-scrollbar-thumb{background:var(--scrollbar);border-radius:3px}
+::-webkit-scrollbar-track{background:var(--track)}
+
+/* NAV */
+.topnav{background:var(--nav-bg);border-bottom:1px solid var(--border);padding:10px 20px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:100;backdrop-filter:blur(14px)}
+.nav-brand{font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:2.5px;color:var(--amber);text-transform:uppercase}
+.nav-right{display:flex;align-items:center;gap:6px;flex-wrap:wrap}
+.ntab{padding:7px 13px;border-radius:8px;border:1px solid transparent;background:transparent;color:var(--text2);font-family:'IBM Plex Sans',sans-serif;font-size:12px;font-weight:500;cursor:pointer;transition:all .2s}
+.ntab.active{background:var(--amber);color:#000;border-color:var(--amber)}
+.ntab:hover:not(.active){background:var(--card2);border-color:var(--border);color:var(--white)}
+.theme-toggle{padding:7px 10px;border-radius:8px;border:1px solid var(--border);background:transparent;color:var(--text2);cursor:pointer;font-size:13px;transition:all .2s}
+.theme-toggle:hover{border-color:var(--amber)}
+
+.shell{max-width:960px;margin:0 auto;padding:28px 18px 100px}
+
+/* HEADER */
+.hdr-outer{background:linear-gradient(135deg,#1c1600,#261e00 45%,#1e1a00);border:1px solid #3d3100;border-radius:20px;padding:40px 36px;margin-bottom:26px;position:relative;overflow:hidden}
+.hdr-outer::before{content:'';position:absolute;top:-100px;right:-80px;width:320px;height:320px;background:radial-gradient(circle,rgba(251,191,36,.1),transparent 68%);pointer-events:none}
+.hdr-outer::after{content:'';position:absolute;bottom:-60px;left:20px;width:200px;height:200px;background:radial-gradient(circle,rgba(251,191,36,.05),transparent 70%);pointer-events:none}
+.hdr-eyebrow{font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:3px;color:rgba(251,191,36,.6);text-transform:uppercase;margin-bottom:14px}
+.hdr-outer h1{font-family:'Syne',sans-serif;font-size:30px;font-weight:800;color:#fde68a;line-height:1.15;margin-bottom:12px}
+.hdr-desc{font-size:14px;color:#b07d30;line-height:1.7;max-width:600px;margin-bottom:20px}
+.hdr-pills{display:flex;gap:8px;flex-wrap:wrap}
+.pill{padding:5px 13px;border-radius:20px;font-family:'IBM Plex Mono',monospace;font-size:10.5px;font-weight:500;letter-spacing:.3px}
+.pill-amber{background:rgba(251,191,36,.12);color:var(--amber);border:1px solid rgba(251,191,36,.22)}
+.pill-green{background:rgba(52,211,153,.1);color:var(--green);border:1px solid rgba(52,211,153,.2)}
+.pill-blue{background:rgba(96,165,250,.1);color:var(--blue);border:1px solid rgba(96,165,250,.2)}
+
+.hidden{display:none!important}
+@keyframes fadeUp{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
+.page{animation:fadeUp .3s ease both}
+
+.btn{padding:10px 20px;border-radius:9px;border:none;font-family:'IBM Plex Sans',sans-serif;font-size:13px;font-weight:600;cursor:pointer;transition:all .2s}
+.btn-primary{background:var(--amber);color:#000}.btn-primary:hover{filter:brightness(1.1)}
+.btn-ghost{background:transparent;border:1px solid var(--border);color:var(--text2)}.btn-ghost:hover{border-color:var(--amber);color:var(--white)}
+
+/* NARRATIVE */
+.narrative-block{background:rgba(251,191,36,.05);border:1px solid rgba(251,191,36,.15);border-radius:14px;padding:20px 22px;margin-bottom:22px}
+.narrative-block .nb-label{font-family:'IBM Plex Mono',monospace;font-size:9.5px;letter-spacing:2.5px;text-transform:uppercase;color:var(--amber);margin-bottom:10px;opacity:.8}
+.narrative-block p{font-size:13.5px;color:var(--text);line-height:1.8;margin-bottom:8px}
+.narrative-block p:last-child{margin-bottom:0}
+.narrative-block strong{color:var(--white)}
+.narrative-block em{color:var(--amber);font-style:normal;font-weight:500}
+
+/* TEORIA TABS */
+.teoria-tabs{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:18px}
+.ttab{padding:8px 14px;border-radius:9px;border:1px solid var(--border);background:transparent;color:var(--text2);font-family:'IBM Plex Sans',sans-serif;font-size:12px;font-weight:500;cursor:pointer;transition:all .2s}
+.ttab.active{background:var(--amber);color:#000;border-color:var(--amber)}
+.ttab:hover:not(.active){border-color:var(--amber);color:var(--white)}
+
+.ficha{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:24px 26px;margin-bottom:14px;animation:fadeUp .3s ease both;display:none}
+.ficha.visible{display:block}
+.ficha-header{display:flex;align-items:flex-start;gap:14px;margin-bottom:8px}
+.ficha-icon{width:42px;height:42px;border-radius:11px;display:flex;align-items:center;justify-content:center;font-size:19px;flex-shrink:0}
+.ficha-title{font-family:'Syne',sans-serif;font-size:17px;font-weight:700;color:var(--white);line-height:1.3}
+.ficha-sub{font-size:11.5px;color:var(--text2);margin-top:3px;font-family:'IBM Plex Mono',monospace}
+.ficha-context{font-size:13.5px;color:var(--text);line-height:1.8;margin-bottom:18px;padding-bottom:16px;border-bottom:1px solid var(--border)}
+.ficha-context strong{color:var(--white)}
+.ficha-context em{color:var(--amber);font-style:normal}
+
+.section-label{font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--text2);margin-bottom:10px;margin-top:20px}
+.section-label:first-of-type{margin-top:0}
+
+.concept-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(195px,1fr));gap:10px;margin-bottom:6px}
+.concept-card{background:var(--card2);border:1px solid var(--border);border-radius:10px;padding:13px 14px}
+.concept-card .cc-name{font-weight:600;font-size:12.5px;color:var(--white);margin-bottom:5px}
+.concept-card .cc-body{font-size:12px;color:var(--text);line-height:1.6}
+.concept-card .cc-tag{display:inline-block;margin-top:7px;padding:2px 8px;border-radius:20px;font-family:'IBM Plex Mono',monospace;font-size:10px}
+
+.formula-box{background:var(--card2);border:1px solid var(--border);border-radius:10px;padding:14px 16px;margin:8px 0}
+.formula-box .f-title{font-family:'IBM Plex Mono',monospace;font-size:10px;color:var(--text2);letter-spacing:1.5px;text-transform:uppercase;margin-bottom:6px}
+.formula-box .f-eq{font-family:'IBM Plex Mono',monospace;font-size:15px;color:var(--amber);margin-bottom:5px;font-weight:500}
+.formula-box .f-desc{font-size:12px;color:var(--text);font-family:'IBM Plex Sans',sans-serif;line-height:1.5}
+
+.tip-box{display:flex;gap:11px;padding:13px 15px;border-radius:10px;margin:12px 0;font-size:13px}
+.tip-egel{background:var(--amberBg);border:1px solid var(--amberBorder)}
+.tip-egel .tip-icon{color:var(--amber)}
+.tip-warn{background:var(--roseBg);border:1px solid var(--roseBorder)}
+.tip-warn .tip-icon{color:var(--rose)}
+.tip-info{background:var(--blueBg);border:1px solid var(--blueBorder)}
+.tip-info .tip-icon{color:var(--blue)}
+.tip-box .tip-icon{font-size:15px;flex-shrink:0;margin-top:1px}
+.tip-box .tip-text{color:var(--text);line-height:1.65}
+.tip-box .tip-text strong{color:var(--white)}
+
+.ref-box{background:var(--card2);border-left:3px solid var(--border);padding:10px 14px;border-radius:0 8px 8px 0;margin-top:16px;font-size:11.5px;color:var(--text2);font-family:'IBM Plex Mono',monospace}
+
+.kv-list{display:flex;flex-direction:column;gap:7px}
+.kv{display:grid;grid-template-columns:155px 1fr;gap:12px;padding:9px 13px;background:var(--card2);border-radius:9px;font-size:12.5px;border:1px solid var(--border)}
+.kv-k{font-weight:600;color:var(--amber);font-family:'IBM Plex Mono',monospace;font-size:11.5px;align-self:start;padding-top:2px}
+.kv-v{color:var(--text);line-height:1.65}
+
+.iso-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(168px,1fr));gap:9px}
+.iso-card{background:var(--card2);border:1px solid var(--border);border-radius:10px;padding:13px 14px}
+.iso-card .iso-badge{display:inline-block;padding:2px 8px;border-radius:12px;font-size:10px;font-family:'IBM Plex Mono',monospace;margin-bottom:6px}
+.iso-card .iso-name{font-weight:700;font-size:12.5px;color:var(--white);margin-bottom:5px}
+.iso-card .iso-subs{font-size:11.5px;color:var(--text);line-height:1.6}
+
+/* COMPARATIVAS */
+.comp-tabs{display:flex;gap:5px;flex-wrap:wrap;margin-bottom:16px}
+.ctab{padding:7px 13px;border-radius:8px;border:1px solid var(--border);background:transparent;color:var(--text2);font-size:12px;font-weight:500;cursor:pointer;transition:all .2s;font-family:'IBM Plex Sans',sans-serif}
+.ctab.active{background:var(--indigo);color:#fff;border-color:var(--indigo)}
+.ctab:hover:not(.active){border-color:var(--amber);color:var(--white)}
+.comp-wrap{background:var(--card);border:1px solid var(--border);border-radius:14px;overflow:hidden;margin-bottom:12px;animation:fadeUp .3s ease both;display:none}
+.comp-wrap.visible{display:block}
+.comp-wrap table{width:100%;border-collapse:collapse}
+.comp-wrap th{background:var(--card2);padding:10px 14px;text-align:left;font-size:11.5px;font-weight:600;color:var(--white);border-bottom:1px solid var(--border)}
+.comp-wrap th:first-child{width:20%;font-family:'IBM Plex Mono',monospace;font-size:10.5px;color:var(--text2)}
+.comp-wrap td{padding:9px 14px;font-size:12.5px;border-bottom:1px solid var(--border);color:var(--text);vertical-align:top;line-height:1.6}
+.comp-wrap tr:last-child td{border-bottom:none}
+.comp-wrap td:first-child{font-weight:600;color:var(--amber);font-size:11.5px;font-family:'IBM Plex Mono',monospace}
+.comp-wrap tr:hover td{background:var(--row-hover)}
+
+/* FLASHCARDS */
+.flash-wrap{max-width:580px;margin:0 auto}
+.flash-filters{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:14px}
+.ff-btn{padding:6px 12px;border-radius:20px;border:1px solid var(--border);background:transparent;color:var(--text2);font-size:11.5px;cursor:pointer;transition:all .2s;font-family:'IBM Plex Sans',sans-serif}
+.ff-btn.active{background:var(--amber);color:#000;border-color:var(--amber)}
+.ff-btn:hover:not(.active){border-color:var(--amber);color:var(--white)}
+.flash-progress{display:flex;gap:3px;margin-bottom:14px;flex-wrap:wrap}
+.fp-dot{width:9px;height:9px;border-radius:50%;background:var(--border);transition:background .3s}
+.fp-dot.done{background:var(--green)}.fp-dot.cur{background:var(--amber)}
+.flash-scene{perspective:1000px;height:230px;margin-bottom:14px}
+.flash-card{width:100%;height:100%;position:relative;transform-style:preserve-3d;transition:transform .5s cubic-bezier(.4,0,.2,1);cursor:pointer}
+.flash-card.flipped{transform:rotateY(180deg)}
+.flash-face{position:absolute;inset:0;backface-visibility:hidden;background:var(--card);border:1.5px solid var(--border);border-radius:16px;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:26px;text-align:center;transition:border-color .2s}
+.flash-card:hover .flash-face{border-color:var(--amber)}
+.flash-back{transform:rotateY(180deg);background:var(--card2)}
+.flash-face .fc-cat{font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:1.5px;text-transform:uppercase;color:var(--text2);margin-bottom:10px}
+.flash-face .fc-q{font-family:'Syne',sans-serif;font-size:16px;font-weight:700;color:var(--white);line-height:1.4}
+.flash-face .fc-a{font-size:13px;color:var(--text);line-height:1.65}
+.flash-face .fc-key{margin-top:10px;padding:5px 12px;border-radius:20px;background:var(--amberBg);border:1px solid var(--amberBorder);font-size:11px;color:var(--amber);font-family:'IBM Plex Mono',monospace}
+.flash-face::after{content:'↕ voltear';position:absolute;bottom:11px;right:14px;font-family:'IBM Plex Mono',monospace;font-size:9px;color:var(--text2);letter-spacing:1px}
+.flash-nav{display:flex;gap:8px;align-items:center;justify-content:center}
+.flash-counter{font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--text2)}
+
+/* QUIZ */
+.quiz-wrap{max-width:700px;margin:0 auto}
+.quiz-prog-bar-outer{height:4px;background:var(--border);border-radius:4px;margin-bottom:16px;overflow:hidden}
+.quiz-prog-bar{height:100%;background:var(--amber);border-radius:4px;transition:width .4s ease}
+.quiz-dots{display:flex;gap:4px;flex-wrap:wrap;margin-bottom:18px}
+.qdot{width:11px;height:11px;border-radius:50%;background:var(--border);cursor:pointer;transition:all .2s}
+.qdot.answered{background:var(--text2)}.qdot.correct{background:var(--green)}.qdot.wrong{background:var(--red)}.qdot.active{background:var(--amber);transform:scale(1.3)}
+
+.qcard{background:var(--card);border:1px solid var(--border);border-radius:16px;padding:26px;animation:fadeUp .25s ease both}
+.qcard .q-meta{display:flex;gap:8px;align-items:center;margin-bottom:14px;flex-wrap:wrap}
+.q-num{font-family:'IBM Plex Mono',monospace;font-size:10px;color:var(--text2);letter-spacing:1px}
+.q-badge{padding:3px 9px;border-radius:20px;font-size:10px;font-weight:600;font-family:'IBM Plex Mono',monospace}
+.q-diff-easy{background:var(--greenBg);color:var(--green);border:1px solid var(--greenBorder)}
+.q-diff-med{background:var(--amberBg);color:var(--amber);border:1px solid var(--amberBorder)}
+.q-diff-hard{background:var(--roseBg);color:var(--rose);border:1px solid var(--roseBorder)}
+.q-topic{padding:3px 9px;border-radius:20px;font-size:10px;background:var(--indigoBg);color:var(--indigo);border:1px solid var(--indigoBorder);font-family:'IBM Plex Mono',monospace}
+.q-intro{font-size:13.5px;color:var(--text);line-height:1.75;margin-bottom:13px}
+.q-code{background:#080a0f;border:1px solid var(--border);border-radius:10px;padding:14px 16px;font-family:'IBM Plex Mono',monospace;font-size:12px;color:#c9d1d9;line-height:1.65;margin-bottom:14px;white-space:pre;overflow-x:auto}
+body.light .q-code{background:#1e1e1e;color:#d4d4d4}
+.q-text{font-size:14px;font-weight:600;color:var(--white);margin-bottom:16px;line-height:1.5}
+.opts{display:flex;flex-direction:column;gap:8px}
+.opt{display:flex;align-items:flex-start;gap:12px;padding:13px 15px;border-radius:11px;border:1.5px solid var(--border);background:var(--card2);cursor:pointer;transition:all .2s;text-align:left;width:100%;font-family:'IBM Plex Sans',sans-serif}
+.opt:hover:not(:disabled){border-color:var(--amber);background:var(--opt-hover)}
+.opt:disabled{cursor:default}
+.opt-letter{width:25px;height:25px;border-radius:7px;background:var(--border);display:flex;align-items:center;justify-content:center;font-family:'IBM Plex Mono',monospace;font-size:11px;font-weight:600;color:var(--text2);flex-shrink:0;margin-top:1px;transition:all .2s}
+.opt-body{display:flex;flex-direction:column;gap:3px;flex:1}
+.opt-main{font-size:13px;color:var(--text);line-height:1.5}
+.opt-comment{font-size:11.5px;color:var(--text2);font-family:'IBM Plex Mono',monospace;line-height:1.4}
+.opt.correct-ans{border-color:var(--green);background:var(--greenBg)}
+.opt.correct-ans .opt-letter{background:var(--green);color:#000}
+.opt.wrong-ans{border-color:var(--red);background:var(--redBg)}
+.opt.wrong-ans .opt-letter{background:var(--red);color:#fff}
+.opt.revealed{border-color:var(--greenBorder);background:var(--greenBg)}
+.opt.revealed .opt-letter{background:var(--green);color:#000}
+.feedback-box{margin-top:14px;padding:15px 17px;border-radius:11px;font-size:13px;line-height:1.65;display:none}
+.feedback-box.show{display:block}
+.fb-correct{background:var(--greenBg);border:1px solid var(--greenBorder)}
+.fb-wrong{background:var(--redBg);border:1px solid var(--redBorder)}
+.fb-title{font-weight:700;font-size:12px;margin-bottom:6px;font-family:'IBM Plex Mono',monospace;letter-spacing:.5px}
+.fb-correct .fb-title{color:var(--green)}.fb-wrong .fb-title{color:var(--red)}
+.fb-text{color:var(--text);margin-bottom:10px}
+.trap-box{padding:11px 13px;border-radius:9px;background:var(--amberBg);border:1px solid var(--amberBorder)}
+.trap-title{font-family:'IBM Plex Mono',monospace;font-size:10px;color:var(--amber);letter-spacing:1px;margin-bottom:4px}
+.trap-text{font-size:12px;color:var(--text)}
+.quiz-nav{display:flex;gap:8px;margin-top:16px;justify-content:flex-end}
+.results-card{background:var(--card);border:1px solid var(--border);border-radius:16px;padding:36px;text-align:center;animation:fadeUp .4s ease both}
+.results-score{font-family:'Syne',sans-serif;font-size:56px;font-weight:800;color:var(--amber);line-height:1}
+.results-label{font-size:12.5px;color:var(--text2);margin-top:6px;margin-bottom:26px;font-family:'IBM Plex Mono',monospace}
+.results-breakdown{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:26px}
+.rb-item{background:var(--card2);border-radius:10px;padding:14px}
+.rb-num{font-family:'Syne',sans-serif;font-size:26px;font-weight:700}
+.rb-lbl{font-size:11px;color:var(--text2);font-family:'IBM Plex Mono',monospace;margin-top:2px}
+.review-list{text-align:left;display:flex;flex-direction:column;gap:8px;max-height:340px;overflow-y:auto}
+.review-item{padding:10px 14px;border-radius:10px;font-size:12.5px;border:1px solid var(--border);display:flex;gap:10px;align-items:flex-start}
+.ri-icon{font-size:14px;flex-shrink:0;margin-top:1px}
+.ri-text{color:var(--text);line-height:1.5}
+.ri-text strong{color:var(--white)}
+</style>
+</head>
+<body>
+
+<nav class="topnav">
+  <span class="nav-brand">EGEL · Área 4</span>
+  <div class="nav-right">
+    <button class="ntab active" onclick="showPage('teoria')">Teoría</button>
+    <button class="ntab" onclick="showPage('comparativas')">Comparativas</button>
+    <button class="ntab" onclick="showPage('flashcards')">Flashcards</button>
+    <button class="ntab" onclick="showPage('quiz')">Quiz</button>
+    <button class="theme-toggle" onclick="toggleTheme()" id="themeBtn">☀️</button>
+  </div>
+</nav>
+
+<div class="shell">
+  <div class="hdr-outer">
+    <div class="hdr-eyebrow">Sesión · Área 4 · EGEL Plus ISOFT</div>
+    <h1>Gestión de Proyectos<br>&amp; Calidad de Software</h1>
+    <p class="hdr-desc">Todo proyecto de software necesita dos cosas para tener éxito: ser entregado a tiempo y dentro del presupuesto, y funcionar bien. El Área 4 estudia exactamente eso: cómo controlar un proyecto en marcha (4.1) y cómo medir si el producto final es de calidad (4.2).</p>
+    <div class="hdr-pills">
+      <span class="pill pill-amber">4.1 · 8 reactivos · Gestión</span>
+      <span class="pill pill-green">4.2 · 10 reactivos · Calidad</span>
+      <span class="pill pill-blue">EVM · ISO 25010 · CMMI · Riesgos</span>
+    </div>
+  </div>
+
+  <!-- ══ TEORÍA ══ -->
+  <div id="page-teoria" class="page">
+
+    <div class="narrative-block">
+      <div class="nb-label">¿De qué trata esta sesión y cómo se conecta todo?</div>
+      <p>Imagina que eres el responsable de un proyecto de software. Tienes un equipo, un presupuesto y una fecha de entrega. Tu trabajo tiene dos dimensiones: <strong>gestionar el proyecto mientras sucede</strong> (¿vamos al ritmo correcto?, ¿gastamos bien?) y <strong>garantizar que lo que construyes tenga calidad</strong> (¿el sistema hace lo que debe y lo hace bien?).</p>
+      <p>La subárea <em>4.1</em> te da las herramientas para gestionar: cómo estimar el trabajo antes de empezar, cómo medir el avance real mientras avanzas (EVM), cómo identificar y responder a los riesgos que amenazan el proyecto, y cómo organizar al equipo. La subárea <em>4.2</em> te da el lenguaje para definir y medir calidad: qué características debe tener un producto de calidad (ISO 25010), qué tan maduros son tus procesos de desarrollo (CMMI), y cómo verificar que el software funciona correctamente antes de entregarlo (pruebas).</p>
+      <p>Estas dos subáreas no son independientes: <strong>un proyecto bien gestionado produce un producto de mayor calidad</strong>. Las métricas de calidad alimentan las decisiones de gestión, y los riesgos identificados suelen ser amenazas a la calidad del producto final.</p>
+    </div>
+
+    <div class="teoria-tabs">
+      <button class="ttab active" onclick="showFicha('evm')">📊 EVM</button>
+      <button class="ttab" onclick="showFicha('estimacion')">🔢 Estimación</button>
+      <button class="ttab" onclick="showFicha('riesgo')">⚠️ Riesgos</button>
+      <button class="ttab" onclick="showFicha('rrhh')">👥 RRHH &amp; Tiempo</button>
+      <button class="ttab" onclick="showFicha('iso25010')">🏆 ISO 25010</button>
+      <button class="ttab" onclick="showFicha('cmmi')">🎯 CMMI</button>
+      <button class="ttab" onclick="showFicha('testing')">🧪 Pruebas</button>
+      <button class="ttab" onclick="showFicha('metricas')">📐 Métricas</button>
+    </div>
+
+    <!-- EVM -->
+    <div class="ficha visible" id="ficha-evm">
+      <div class="ficha-header">
+        <div class="ficha-icon" style="background:var(--amberBg);color:var(--amber)">📊</div>
+        <div>
+          <div class="ficha-title">Gestión del Valor Ganado (EVM)</div>
+          <div class="ficha-sub">Earned Value Management · PMBOK / ISO 21500</div>
+        </div>
+      </div>
+      <p class="ficha-context">
+        Cuando un proyecto lleva dos meses y has gastado $40,000, ¿sabes si vas bien? La respuesta es: <strong>no lo sabes solo con ese dato</strong>. Podrías haber gastado $40K pero haber completado trabajo que solo vale $30K. O podrías haber completado trabajo que vale $50K. <em>EVM resuelve exactamente eso</em>: integra costo, tiempo y avance real en un solo sistema de métricas. Es el estándar del PMBOK para monitorear el estado real de un proyecto.
+      </p>
+      <div class="section-label">Los tres valores que necesitas saber siempre</div>
+      <div class="concept-grid">
+        <div class="concept-card">
+          <div class="cc-name">PV — Valor Planificado</div>
+          <div class="cc-body">¿Cuánto trabajo <em>debería</em> estar hecho a esta fecha según el plan original? Se expresa en dinero (el costo presupuestado del trabajo planificado). También llamado BCWS.</div>
+          <span class="cc-tag" style="background:var(--blueBg);color:var(--blue)">Lo que planeé gastar</span>
+        </div>
+        <div class="concept-card">
+          <div class="cc-name">EV — Valor Ganado</div>
+          <div class="cc-body">¿Cuánto trabajo se completó realmente, valorado al costo presupuestado? Es el "termómetro" real del avance. Si completé el 60% del proyecto y el presupuesto es $100K, EV = $60K. También llamado BCWP.</div>
+          <span class="cc-tag" style="background:var(--greenBg);color:var(--green)">Lo que avancé, en $</span>
+        </div>
+        <div class="concept-card">
+          <div class="cc-name">AC — Costo Real</div>
+          <div class="cc-body">¿Cuánto dinero realmente se gastó para completar ese trabajo? Lo que el contador reporta. No dice nada sobre si avanzaste mucho o poco, solo cuánto salió del presupuesto. También llamado ACWP.</div>
+          <span class="cc-tag" style="background:var(--redBg);color:var(--red)">Lo que realmente gasté</span>
+        </div>
+      </div>
+      <div class="tip-box tip-info">
+        <span class="tip-icon">💡</span>
+        <div class="tip-text"><strong>La clave para no confundirse:</strong> PV es el plan. EV es la realidad del avance. AC es la realidad del gasto. Para calcular cualquier métrica EVM, primero identifica cuál de los tres valores tienes y cuál te falta calcular.</div>
+      </div>
+      <div class="section-label">Variaciones: ¿qué tan lejos estoy del plan?</div>
+      <div class="formula-box">
+        <div class="f-title">CV — Variación de Costo · ¿Sobrepasé el presupuesto?</div>
+        <div class="f-eq">CV = EV − AC</div>
+        <div class="f-desc">CV positivo = completé más trabajo del que gasté → bajo presupuesto ✓ &nbsp;|&nbsp; CV negativo = gasté más de lo que avancé → sobre presupuesto ✗</div>
+      </div>
+      <div class="formula-box">
+        <div class="f-title">SV — Variación de Cronograma · ¿Voy adelantado o atrasado?</div>
+        <div class="f-eq">SV = EV − PV</div>
+        <div class="f-desc">SV positivo = avancé más de lo que el plan decía → adelantado ✓ &nbsp;|&nbsp; SV negativo = avancé menos de lo planeado → atrasado ✗</div>
+      </div>
+      <div class="section-label">Índices de eficiencia: ¿qué tan bien estoy usando mis recursos?</div>
+      <p style="font-size:13px;color:var(--text);margin-bottom:10px;line-height:1.7">Los índices son ratios: 1.0 es perfecto, arriba de 1 es bueno, debajo de 1 es malo. Su utilidad real está en proyectar cómo terminará el proyecto si continúa al mismo ritmo.</p>
+      <div class="formula-box">
+        <div class="f-title">CPI — Índice de Desempeño de Costo · ¿Cuánto valor genero por cada peso gastado?</div>
+        <div class="f-eq">CPI = EV / AC</div>
+        <div class="f-desc">CPI = 0.85 → por cada $1 gastado solo genero $0.85 de avance. Si continúo así, el proyecto costará más de lo presupuestado.</div>
+      </div>
+      <div class="formula-box">
+        <div class="f-title">SPI — Índice de Desempeño de Cronograma · ¿Qué tan rápido avanzo vs. lo planeado?</div>
+        <div class="f-eq">SPI = EV / PV</div>
+        <div class="f-desc">SPI = 0.9 → estoy avanzando al 90% de la velocidad planeada. El proyecto llegará tarde si no se corrige.</div>
+      </div>
+      <div class="formula-box">
+        <div class="f-title">EAC — Estimación Al Completar · ¿Cuánto costará el proyecto en total?</div>
+        <div class="f-eq">EAC = BAC / CPI</div>
+        <div class="f-desc">BAC es el presupuesto total original. Si CPI &lt; 1, el EAC será mayor que el BAC: el proyecto excederá el presupuesto.</div>
+      </div>
+      <div class="tip-box tip-egel">
+        <span class="tip-icon">⭐</span>
+        <div class="tip-text"><strong>Trampa clásica EGEL:</strong> Confunden CPI con SPI. Recuerda: CPI usa AC (costo real), SPI usa PV (plan). Si el escenario habla de "eficiencia en gasto" o "proyección de costo" → CPI. Si habla de "velocidad de avance" o "retraso en tiempo" → SPI. Son dos dimensiones distintas del mismo proyecto.</div>
+      </div>
+      <div class="ref-box">📚 PMBOK 6ª ed. Cap. 7 · Cervantes et al. — Gestión de proyectos de software</div>
+    </div>
+
+    <!-- ESTIMACION -->
+    <div class="ficha" id="ficha-estimacion">
+      <div class="ficha-header">
+        <div class="ficha-icon" style="background:var(--purpleBg);color:var(--purple)">🔢</div>
+        <div>
+          <div class="ficha-title">Técnicas de Estimación</div>
+          <div class="ficha-sub">Esfuerzo · Costo · Tamaño · Tiempo</div>
+        </div>
+      </div>
+      <p class="ficha-context">
+        Antes de que empiece cualquier proyecto, alguien tiene que responder: ¿cuánto tiempo tomará esto? ¿cuánto costará? ¿cuántas personas necesito? Eso es estimación. <strong>No se trata de adivinar</strong>, sino de aplicar técnicas sistemáticas que reduzcan la incertidumbre. La mala estimación es una de las causas más comunes de fracaso en proyectos de software: proyectos que se entregan tarde, costaron el doble, o nunca terminaron. <em>Saber cuándo usar cada técnica es lo que evalúa el EGEL</em>.
+      </p>
+      <div class="section-label">Técnicas que necesitas dominar</div>
+      <div class="kv-list">
+        <div class="kv">
+          <div class="kv-k">Análoga</div>
+          <div class="kv-v">Toma como referencia proyectos pasados similares. Rápida y económica, pero depende de que realmente exista esa similitud. Útil al inicio cuando hay poca información.</div>
+        </div>
+        <div class="kv">
+          <div class="kv-k">COCOMO II</div>
+          <div class="kv-v">Modelo paramétrico que calcula esfuerzo en personas-mes a partir del tamaño en líneas de código (KLOC). Fórmula: <span style="font-family:'IBM Plex Mono',monospace;color:var(--amber)">E = a × KLOC^b × EAF</span>. El EAF (Factor de Ajuste del Esfuerzo) pondera atributos del equipo, la plataforma y el proceso.</div>
+        </div>
+        <div class="kv">
+          <div class="kv-k">Puntos de Función</div>
+          <div class="kv-v">Miden el tamaño funcional del software desde la perspectiva del usuario: cuántas entradas, salidas, consultas, archivos internos y externos tiene. La gran ventaja es que son <strong>independientes del lenguaje de programación</strong>, así que puedes comparar proyectos en Java vs. Python.</div>
+        </div>
+        <div class="kv">
+          <div class="kv-k">Planning Poker</div>
+          <div class="kv-v">Técnica ágil: cada miembro del equipo vota <strong>simultáneamente</strong> con cartas de la secuencia Fibonacci (1, 2, 3, 5, 8, 13…). La simultaneidad elimina el "efecto ancla" — que la primera opinión expresada influya en las demás. Solo se discute cuando hay divergencia.</div>
+        </div>
+        <div class="kv">
+          <div class="kv-k">Delphi</div>
+          <div class="kv-v">Expertos estiman de forma <strong>anónima e iterativa</strong>: cada ronda los participantes ven el resumen de las estimaciones anteriores y pueden ajustar la suya. Termina cuando hay consenso. Útil cuando el equipo está disperso o cuando expertos con distintos niveles jerárquicos deben opinar sin presión.</div>
+        </div>
+        <div class="kv">
+          <div class="kv-k">3 Puntos / PERT</div>
+          <div class="kv-v">Cuando hay incertidumbre en la duración, pides tres estimaciones: optimista (O), más probable (M) y pesimista (P). Fórmula: <span style="font-family:'IBM Plex Mono',monospace;color:var(--amber)">tE = (O + 4M + P) / 6</span>. El factor 4 pondera más el escenario más probable.</div>
+        </div>
+      </div>
+      <div class="tip-box tip-egel">
+        <span class="tip-icon">⭐</span>
+        <div class="tip-text"><strong>Diferencia clave Planning Poker vs. Delphi:</strong> Planning Poker = equipo ágil, cara a cara, simultáneo. Delphi = expertos, anónimo, iterativo por rondas. Si el escenario dice "el equipo de Scrum se reúne con tarjetas" → Poker. Si dice "expertos de distintas áreas dan su opinión por separado" → Delphi.</div>
+      </div>
+      <div class="ref-box">📚 Pressman 7ª ed. Cap. 23 · PMBOK 6 Cap. 6-7 · Sommerville Cap. 23</div>
+    </div>
+
+    <!-- RIESGO -->
+    <div class="ficha" id="ficha-riesgo">
+      <div class="ficha-header">
+        <div class="ficha-icon" style="background:var(--roseBg);color:var(--rose)">⚠️</div>
+        <div>
+          <div class="ficha-title">Gestión de Riesgos</div>
+          <div class="ficha-sub">PMBOK · ISO 31000 · Proceso completo</div>
+        </div>
+      </div>
+      <p class="ficha-context">
+        Un riesgo es un evento incierto que, si ocurre, puede afectar negativamente al proyecto. La gestión de riesgos no es pesimismo: es <strong>anticipación profesional</strong>. El gerente que identifica riesgos temprano puede preparar respuestas antes de que el problema llegue; el que no lo hace reacciona en crisis. <em>En el EGEL, los escenarios típicos piden identificar el tipo de riesgo o elegir la estrategia de respuesta correcta</em> dado un contexto específico.
+      </p>
+      <div class="section-label">El proceso: de identificar a monitorear</div>
+      <div class="kv-list">
+        <div class="kv"><div class="kv-k">1. Identificar</div><div class="kv-v">Detectar qué podría salir mal. Técnicas: brainstorming, lista de verificación, análisis FODA, diagrama de Ishikawa (causa-efecto). El resultado es el Registro de Riesgos.</div></div>
+        <div class="kv"><div class="kv-k">2. Análisis cualitativo</div><div class="kv-v">Priorizar riesgos usando una <strong>Matriz Probabilidad × Impacto</strong>. Sin números exactos; se asignan niveles (Alto/Medio/Bajo). Rápido y siempre se hace.</div></div>
+        <div class="kv"><div class="kv-k">3. Análisis cuantitativo</div><div class="kv-v">Solo para los riesgos prioritarios. Se asignan valores numéricos: <strong>EMV = Probabilidad × Impacto monetario</strong>. También se usa simulación Monte Carlo o árboles de decisión.</div></div>
+        <div class="kv"><div class="kv-k">4. Respuesta</div><div class="kv-v">Decidir qué hacer con cada riesgo prioritario. Hay cuatro estrategias (ver abajo). Esta es la parte más evaluada en el EGEL.</div></div>
+        <div class="kv"><div class="kv-k">5. Monitorear</div><div class="kv-v">Seguimiento continuo: ¿los riesgos identificados siguen ahí?, ¿aparecieron nuevos?, ¿las respuestas funcionan? El Registro de Riesgos se actualiza constantemente.</div></div>
+      </div>
+      <div class="section-label">Las 4 estrategias de respuesta ante amenazas</div>
+      <div class="concept-grid">
+        <div class="concept-card">
+          <div class="cc-name">Evitar</div>
+          <div class="cc-body">Eliminar la causa del riesgo. Cambiar el plan para que ese riesgo ya no pueda ocurrir. Ejemplo: cambiar la tecnología que generaba la incertidumbre.</div>
+          <span class="cc-tag" style="background:var(--redBg);color:var(--red)">Eliminar la causa</span>
+        </div>
+        <div class="concept-card">
+          <div class="cc-name">Transferir</div>
+          <div class="cc-body">Ceder el riesgo a un tercero contractualmente. El riesgo sigue existiendo, pero ya no es tu responsabilidad financiera. Ejemplo: seguros, outsourcing, cláusulas contractuales.</div>
+          <span class="cc-tag" style="background:var(--blueBg);color:var(--blue)">Ceder a tercero</span>
+        </div>
+        <div class="concept-card">
+          <div class="cc-name">Mitigar</div>
+          <div class="cc-body">Reducir la probabilidad o el impacto del riesgo antes de que ocurra. El riesgo aún puede pasar, pero sus consecuencias serán menores. Ejemplo: capacitar al equipo en una tecnología nueva.</div>
+          <span class="cc-tag" style="background:var(--amberBg);color:var(--amber)">Reducir P o Impacto</span>
+        </div>
+        <div class="concept-card">
+          <div class="cc-name">Aceptar</div>
+          <div class="cc-body"><strong>Pasiva:</strong> no hacer nada y asumir las consecuencias si ocurre. <strong>Activa:</strong> preparar un plan de contingencia que se activa solo si el riesgo materializa. Ejemplo: reserva de contingencia en el presupuesto.</div>
+          <span class="cc-tag" style="background:var(--greenBg);color:var(--green)">Pasiva o con plan B</span>
+        </div>
+      </div>
+      <div class="tip-box tip-warn">
+        <span class="tip-icon">⚠️</span>
+        <div class="tip-text"><strong>Trampa frecuente — Mitigar vs. Aceptar activa:</strong> Tener un "plan de contingencia listo para activar" es Aceptar activa, NO mitigar. Mitigar = acciones <em>antes</em> del riesgo para reducirlo. Aceptar activa = preparar respuesta para cuando ya ocurrió. Si el escenario dice "si falla X, activamos Y", es aceptación activa.</div>
+      </div>
+      <div class="ref-box">📚 PMBOK 6ª ed. Cap. 11 · Sommerville Cap. 22 · Pressman Cap. 28</div>
+    </div>
+
+    <!-- RRHH Y TIEMPO -->
+    <div class="ficha" id="ficha-rrhh">
+      <div class="ficha-header">
+        <div class="ficha-icon" style="background:var(--blueBg);color:var(--blue)">👥</div>
+        <div>
+          <div class="ficha-title">Gestión del Cronograma y Recursos Humanos</div>
+          <div class="ficha-sub">CPM · PERT · Gantt · RACI · WBS</div>
+        </div>
+      </div>
+      <p class="ficha-context">
+        Saber cuánto costará un proyecto (EVM) es una cosa; saber <em>cuándo terminará</em> es otra. La gestión del cronograma responde esa pregunta: dadas las actividades del proyecto y sus dependencias, ¿cuál es la secuencia óptima?, ¿qué actividades son críticas (si se retrasan, todo se retrasa)? Y una vez que sabes el cronograma, necesitas asignar personas: <strong>¿quién hace qué, y quién aprueba qué?</strong> Eso es la gestión de RRHH.
+      </p>
+      <div class="section-label">Herramientas de cronograma</div>
+      <div class="kv-list">
+        <div class="kv"><div class="kv-k">WBS / EDT</div><div class="kv-v">El punto de partida. Descompone todo el trabajo del proyecto en entregables más pequeños hasta llegar a "paquetes de trabajo" asignables y estimables. Sin WBS no puedes estimar ni planear correctamente.</div></div>
+        <div class="kv"><div class="kv-k">Diagrama de Gantt</div><div class="kv-v">Barras horizontales que muestran la duración de cada actividad en el tiempo. Ideal para comunicar el cronograma a stakeholders porque es visual y fácil de leer. Limitación: no muestra claramente las dependencias entre actividades.</div></div>
+        <div class="kv"><div class="kv-k">CPM — Ruta Crítica</div><div class="kv-v">Red de actividades con duraciones deterministas. Calcula la <strong>ruta más larga</strong> del proyecto (la que determina la fecha de fin). Las actividades en esa ruta tienen <strong>holgura = 0</strong>: cualquier retraso en ellas retrasa todo el proyecto.</div></div>
+        <div class="kv"><div class="kv-k">PERT</div><div class="kv-v">Como CPM pero para cuando no sabes exactamente cuánto durará cada actividad. Usa estimaciones probabilísticas con 3 puntos. Útil en proyectos con alta incertidumbre técnica.</div></div>
+      </div>
+      <div class="section-label">Gestión de personas</div>
+      <div class="kv-list">
+        <div class="kv"><div class="kv-k">Matriz RACI</div><div class="kv-v">Define quién hace qué en cada tarea: <strong>R</strong>esponsable (ejecuta), <strong>A</strong>ccountable (aprueba y rinde cuentas — solo uno por tarea), <strong>C</strong>onsultado (da input), <strong>I</strong>nformado (recibe actualizaciones). Elimina ambigüedad sobre responsabilidades.</div></div>
+        <div class="kv"><div class="kv-k">Nivelación de recursos</div><div class="kv-v">Cuando una persona está asignada a demasiadas tareas simultáneas (sobreasignación), el cronograma se ajusta para distribuir su carga. Puede extender la fecha de entrega.</div></div>
+      </div>
+      <div class="tip-box tip-egel">
+        <span class="tip-icon">⭐</span>
+        <div class="tip-text"><strong>CPM vs. PERT en el EGEL:</strong> CPM tiene duraciones fijas y te pide calcular la ruta más larga. PERT tiene duraciones probabilísticas (3 puntos). Si el escenario te da duraciones exactas y pide la ruta crítica → CPM. Si hay incertidumbre y pide la duración esperada → PERT. Ambos producen una red de actividades.</div>
+      </div>
+      <div class="ref-box">📚 PMBOK 6ª ed. Cap. 6 y 9 · Pressman Cap. 26</div>
+    </div>
+
+    <!-- ISO 25010 -->
+    <div class="ficha" id="ficha-iso25010">
+      <div class="ficha-header">
+        <div class="ficha-icon" style="background:var(--greenBg);color:var(--green)">🏆</div>
+        <div>
+          <div class="ficha-title">ISO/IEC 25010 — Calidad del Producto</div>
+          <div class="ficha-sub">SQuaRE · Modelo de calidad · Reemplaza ISO 9126</div>
+        </div>
+      </div>
+      <p class="ficha-context">
+        Cuando un cliente dice "quiero que el sistema sea de calidad", ¿qué significa eso exactamente? Sin un modelo estándar, cada quien interpreta la calidad a su manera. <em>ISO 25010 es ese estándar</em>: define <strong>8 características</strong> que un producto de software de calidad debe tener, cada una con subcaracterísticas medibles. Su utilidad práctica es doble: como requisito no funcional (el arquitecto la usa para especificar), y como criterio de evaluación (el QA la usa para probar). <strong>En el EGEL, los escenarios presentan un requerimiento y piden identificar a qué característica pertenece.</strong>
+      </p>
+      <div class="section-label">Las 8 características — memorízalas con su "pregunta clave"</div>
+      <div class="iso-grid">
+        <div class="iso-card">
+          <span class="iso-badge" style="background:var(--blueBg);color:var(--blue)">¿Hace lo correcto?</span>
+          <div class="iso-name">Adecuación funcional</div>
+          <div class="iso-subs">Completitud · Corrección · Pertinencia funcional</div>
+        </div>
+        <div class="iso-card">
+          <span class="iso-badge" style="background:var(--amberBg);color:var(--amber)">¿Qué tan rápido y eficiente?</span>
+          <div class="iso-name">Eficiencia de desempeño</div>
+          <div class="iso-subs">Comportamiento temporal · Uso de recursos · Capacidad</div>
+        </div>
+        <div class="iso-card">
+          <span class="iso-badge" style="background:var(--purpleBg);color:var(--purple)">¿Convive con otros sistemas?</span>
+          <div class="iso-name">Compatibilidad</div>
+          <div class="iso-subs">Coexistencia · Interoperabilidad</div>
+        </div>
+        <div class="iso-card">
+          <span class="iso-badge" style="background:var(--greenBg);color:var(--green)">¿Qué tan fácil de usar?</span>
+          <div class="iso-name">Usabilidad</div>
+          <div class="iso-subs">Reconocibilidad · Aprendizaje · Operabilidad · Accesibilidad</div>
+        </div>
+        <div class="iso-card">
+          <span class="iso-badge" style="background:var(--roseBg);color:var(--rose)">¿Qué tan estable y disponible?</span>
+          <div class="iso-name">Fiabilidad</div>
+          <div class="iso-subs">Madurez · Disponibilidad · Tolerancia a fallas · Recuperabilidad</div>
+        </div>
+        <div class="iso-card">
+          <span class="iso-badge" style="background:var(--redBg);color:var(--red)">¿Protege datos y accesos?</span>
+          <div class="iso-name">Seguridad</div>
+          <div class="iso-subs">Confidencialidad · Integridad · No repudio · Autenticidad</div>
+        </div>
+        <div class="iso-card">
+          <span class="iso-badge" style="background:var(--indigoBg);color:var(--indigo)">¿Qué tan fácil de cambiar?</span>
+          <div class="iso-name">Mantenibilidad</div>
+          <div class="iso-subs">Modularidad · Reusabilidad · Analizabilidad · Modificabilidad</div>
+        </div>
+        <div class="iso-card">
+          <span class="iso-badge" style="background:var(--tealBg);color:var(--teal)">¿Puede moverse de entorno?</span>
+          <div class="iso-name">Portabilidad</div>
+          <div class="iso-subs">Adaptabilidad · Instalabilidad · Reemplazabilidad</div>
+        </div>
+      </div>
+      <div class="tip-box tip-egel">
+        <span class="tip-icon">⭐</span>
+        <div class="tip-text"><strong>Las confusiones más frecuentes:</strong> "Responde en menos de 2s" → <strong>Eficiencia de desempeño</strong> (no Fiabilidad). "Funciona aunque falle un nodo" → <strong>Fiabilidad/Tolerancia a fallas</strong> (no Seguridad). "Se integra con SAP" → <strong>Compatibilidad/Interoperabilidad</strong> (no Portabilidad). "Puede correr en Linux sin reescribir" → <strong>Portabilidad/Adaptabilidad</strong> (no Compatibilidad). La diferencia Portabilidad vs. Compatibilidad: Portabilidad = moverse de entorno; Compatibilidad = coexistir e intercambiar datos con otros sistemas.</div>
+      </div>
+      <div class="ref-box">📚 ISO/IEC 25010:2011 · SWEBOK v3 Cap. 10 · Pressman 7ª ed. Cap. 14</div>
+    </div>
+
+    <!-- CMMI -->
+    <div class="ficha" id="ficha-cmmi">
+      <div class="ficha-header">
+        <div class="ficha-icon" style="background:var(--indigoBg);color:var(--indigo)">🎯</div>
+        <div>
+          <div class="ficha-title">CMMI y Modelos de Calidad de Proceso</div>
+          <div class="ficha-sub">Capability Maturity Model Integration · MoProSoft</div>
+        </div>
+      </div>
+      <p class="ficha-context">
+        ISO 25010 habla de la calidad del <em>producto</em>. CMMI habla de la calidad del <em>proceso</em> con el que construyes ese producto. La premisa es simple: <strong>un proceso maduro y definido produce productos de mayor calidad de forma consistente</strong>. CMMI define 5 niveles de madurez organizacional, desde procesos caóticos hasta mejora continua basada en datos. En el EGEL, los escenarios describen cómo trabaja una empresa y piden identificar en qué nivel se encuentra.
+      </p>
+      <div class="section-label">Los 5 niveles — el "termómetro" de madurez de una organización</div>
+      <div class="kv-list">
+        <div class="kv"><div class="kv-k">Nivel 1 · Inicial</div><div class="kv-v">Procesos caóticos, sin definición formal. El éxito depende de individuos heroicos, no del proceso. Los resultados no son predecibles. <em>Señal en escenario: "depende de que Juan esté disponible".</em></div></div>
+        <div class="kv"><div class="kv-k">Nivel 2 · Gestionado</div><div class="kv-v">Cada proyecto planifica, monitorea y controla sus propios procesos. Los proyectos similares pueden replicar el éxito. Pero cada proyecto inventa su proceso. <em>Señal: "cada equipo crea su plan de trabajo".</em></div></div>
+        <div class="kv"><div class="kv-k">Nivel 3 · Definido</div><div class="kv-v">La organización tiene un proceso estándar documentado que todos los proyectos siguen (adaptándolo según necesidad). La diferencia con N2: el estándar es <strong>organizacional</strong>, no por proyecto. <em>Señal: "todos los proyectos siguen el mismo proceso corporativo".</em></div></div>
+        <div class="kv"><div class="kv-k">Nivel 4 · Cuantitativo</div><div class="kv-v">Se usan métricas cuantitativas y control estadístico para gestionar los procesos. Los resultados son predictibles con alta precisión. <em>Señal: "usamos modelos estadísticos para controlar la variación del proceso".</em></div></div>
+        <div class="kv"><div class="kv-k">Nivel 5 · Optimización</div><div class="kv-v">Mejora continua sistemática basada en análisis de causas raíz. La organización innova y adapta sus procesos proactivamente. <em>Señal: "analizamos causas raíz de defectos para cambiar el proceso".</em></div></div>
+      </div>
+      <div class="tip-box tip-warn">
+        <span class="tip-icon">⚠️</span>
+        <div class="tip-text"><strong>La trampa clásica — N2 vs. N3:</strong> Si cada proyecto crea sus propios procedimientos (aunque los documente y siga), eso es N2. Si existe un proceso estándar organizacional que todos los proyectos usan, eso es N3. La palabra clave es <em>"todos los proyectos"</em> o <em>"proceso corporativo"</em>. También: N4 vs. N5 — N4 controla estadísticamente el proceso existente; N5 lo cambia y mejora continuamente.</div>
+      </div>
+      <div class="ref-box">📚 CMMI Institute · NMX-I-059-NYCE (MoProSoft) · Bass/Clements/Kazman</div>
+    </div>
+
+    <!-- TESTING -->
+    <div class="ficha" id="ficha-testing">
+      <div class="ficha-header">
+        <div class="ficha-icon" style="background:var(--purpleBg);color:var(--purple)">🧪</div>
+        <div>
+          <div class="ficha-title">Verificación, Validación y Pruebas</div>
+          <div class="ficha-sub">V&amp;V · Niveles de prueba · Técnicas de diseño</div>
+        </div>
+      </div>
+      <p class="ficha-context">
+        Construiste el sistema. ¿Cómo sabes que funciona? Las pruebas son la actividad que responde esa pregunta, pero hay un matiz importante: <strong>verificar</strong> (¿lo construí según la especificación?) es distinto de <strong>validar</strong> (¿es lo que el cliente realmente necesita?). Un sistema puede cumplir 100% las especificaciones y aun así no satisfacer al usuario si las especificaciones estaban mal. <em>Las pruebas son parte de la calidad del proceso y del producto</em>, y en el EGEL preguntan qué tipo de prueba aplica en qué escenario.
+      </p>
+      <div class="section-label">Verificación vs. Validación</div>
+      <div class="concept-grid">
+        <div class="concept-card">
+          <div class="cc-name">Verificación</div>
+          <div class="cc-body">"¿Construimos el sistema <em>correctamente</em>?" Comprueba que el producto cumple sus especificaciones técnicas. Puede ser estática (revisiones de código) o dinámica (pruebas).</div>
+          <span class="cc-tag" style="background:var(--blueBg);color:var(--blue)">Spec → Producto</span>
+        </div>
+        <div class="concept-card">
+          <div class="cc-name">Validación</div>
+          <div class="cc-body">"¿Construimos el sistema <em>correcto</em>?" Comprueba que satisface las necesidades reales del usuario. Puede encontrar problemas que la especificación nunca capturó.</div>
+          <span class="cc-tag" style="background:var(--greenBg);color:var(--green)">Necesidad → Producto</span>
+        </div>
+      </div>
+      <div class="section-label">Niveles de prueba — de lo pequeño a lo grande</div>
+      <div class="kv-list">
+        <div class="kv"><div class="kv-k">Unitarias</div><div class="kv-v">El desarrollador prueba una función o clase aislada. Es la red de seguridad más básica. Cuando se automatizan y se ejecutan en cada commit (CI), detectan regresiones al instante.</div></div>
+        <div class="kv"><div class="kv-k">Integración</div><div class="kv-v">Prueba que los módulos funcionan correctamente juntos. Estrategias: top-down (prueba de arriba hacia abajo, usa <em>stubs</em> para simular módulos inferiores) y bottom-up (de abajo hacia arriba, usa <em>drivers</em> para invocar módulos superiores).</div></div>
+        <div class="kv"><div class="kv-k">Sistema</div><div class="kv-v">Prueba el sistema completo contra todos los requisitos. La realiza el equipo QA, no el desarrollador. Incluye pruebas funcionales y no funcionales (rendimiento, seguridad).</div></div>
+        <div class="kv"><div class="kv-k">Aceptación (UAT)</div><div class="kv-v">El cliente o usuario final valida que el sistema cumple los criterios de aceptación del negocio. En Scrum, esto ocurre en la revisión del sprint. Alpha = en el entorno del desarrollador. Beta = en el entorno real del usuario.</div></div>
+        <div class="kv"><div class="kv-k">Regresión</div><div class="kv-v">Ejecutar pruebas anteriores después de un cambio, para verificar que no se rompió nada que antes funcionaba. Fundamental en integración continua.</div></div>
+      </div>
+      <div class="section-label">Técnicas de diseño de casos de prueba</div>
+      <div class="kv-list">
+        <div class="kv"><div class="kv-k">Caja negra</div><div class="kv-v">Sin ver el código. Se prueba desde la perspectiva del usuario: entrada → salida esperada. Técnicas: partición de equivalencia (agrupar entradas en clases representativas) y análisis de valores límite (probar en los bordes del rango válido).</div></div>
+        <div class="kv"><div class="kv-k">Caja blanca</div><div class="kv-v">Conociendo la estructura interna del código. Se busca cubrir todas las rutas posibles. La métrica es la cobertura de código (%). La complejidad ciclomática de McCabe indica cuántos casos de prueba mínimos se necesitan.</div></div>
+      </div>
+      <div class="tip-box tip-egel">
+        <span class="tip-icon">⭐</span>
+        <div class="tip-text"><strong>Identificar el tipo de prueba en escenario:</strong> "El cliente valida antes de firmar" = UAT. "El dev prueba su función aislada" = Unitaria. "Se vuelven a correr las pruebas tras agregar una feature" = Regresión. "QA prueba el sistema completo" = Prueba de sistema. "Se prueba que módulo A y B se comunican bien" = Integración.</div>
+      </div>
+      <div class="ref-box">📚 Sommerville Cap. 8 · Pressman 7ª ed. Cap. 17-18 · SWEBOK v3 Cap. 5</div>
+    </div>
+
+    <!-- METRICAS -->
+    <div class="ficha" id="ficha-metricas">
+      <div class="ficha-header">
+        <div class="ficha-icon" style="background:var(--tealBg);color:var(--teal)">📐</div>
+        <div>
+          <div class="ficha-title">Métricas de Calidad y Proceso</div>
+          <div class="ficha-sub">Producto · Proceso · Complejidad · Fiabilidad</div>
+        </div>
+      </div>
+      <p class="ficha-context">
+        "Lo que no se puede medir, no se puede mejorar." Las métricas son el lenguaje cuantitativo de la calidad: te permiten comparar, decidir y mejorar con datos en lugar de intuición. <strong>Las métricas de producto</strong> dicen qué tan bueno es el software que construiste. <strong>Las métricas de proceso</strong> dicen qué tan eficiente es la forma en que lo construyes. En el EGEL, los escenarios dan un valor numérico y preguntan cómo interpretarlo o qué acción sugiere.
+      </p>
+      <div class="section-label">Métricas de producto</div>
+      <div class="kv-list">
+        <div class="kv"><div class="kv-k">Complejidad ciclomática</div><div class="kv-v">McCabe: V(G) = E − N + 2P (aristas − nodos + 2 × componentes). Mide el número de rutas independientes en el código. Su valor más importante: <strong>es el número mínimo de casos de prueba de caja blanca necesarios</strong>. V(G) ≤ 10 es el umbral recomendado; valores mayores sugieren refactorización.</div></div>
+        <div class="kv"><div class="kv-k">Densidad de defectos</div><div class="kv-v">Defectos encontrados / KLOC (o por Punto de Función). Valor bajo = mejor calidad. Permite comparar módulos y detectar cuáles necesitan más atención.</div></div>
+        <div class="kv"><div class="kv-k">MTBF / MTTF</div><div class="kv-v"><strong>MTBF</strong> (Tiempo Medio Entre Fallas): para sistemas reparables, mide el tiempo promedio entre una falla y la siguiente. <strong>MTTF</strong> (Tiempo Medio Hasta Falla): para sistemas no reparables, mide el tiempo de vida esperado. Ambas son métricas de Fiabilidad (ISO 25010).</div></div>
+        <div class="kv"><div class="kv-k">Cobertura de código</div><div class="kv-v">% de código ejecutado por las pruebas. Tipos: por sentencias, por ramas, por condiciones. Alta cobertura da confianza, pero no garantiza ausencia de defectos: puedes tener 100% de cobertura y aún tener bugs en la lógica.</div></div>
+      </div>
+      <div class="section-label">Métricas de proceso ágil</div>
+      <div class="kv-list">
+        <div class="kv"><div class="kv-k">Velocidad (Velocity)</div><div class="kv-v">Story points completados por sprint. Se usa para proyectar: si quedan 150 story points y la velocidad es 30/sprint, el proyecto termina en ~5 sprints. No se compara entre equipos diferentes.</div></div>
+        <div class="kv"><div class="kv-k">Lead Time / Cycle Time</div><div class="kv-v">Lead Time: desde que el cliente solicita hasta que recibe. Cycle Time: solo el tiempo en que el equipo trabaja activamente. Métricas de flujo en Kanban/Lean.</div></div>
+      </div>
+      <div class="tip-box tip-egel">
+        <span class="tip-icon">⭐</span>
+        <div class="tip-text"><strong>Complejidad ciclomática en el EGEL:</strong> Si V(G) = 12 y el estándar es ≤ 10, la acción correcta es refactorizar la función (dividirla). También implica que se necesitan al menos 12 casos de prueba de caja blanca para cubrir todas las rutas. No confundir con cobertura de código (que es porcentaje) ni con casos de caja negra.</div>
+      </div>
+      <div class="ref-box">📚 Pressman Cap. 14-15 · SWEBOK v3 Cap. 10 · McCabe 1976</div>
+    </div>
+  </div><!-- /teoria -->
+
+  <!-- ══ COMPARATIVAS ══ -->
+  <div id="page-comparativas" class="page hidden">
+    <div class="comp-tabs">
+      <button class="ctab active" onclick="showComp('evm-vs')">EVM Métricas</button>
+      <button class="ctab" onclick="showComp('estimacion-vs')">Estimación</button>
+      <button class="ctab" onclick="showComp('riesgo-resp')">Respuestas al Riesgo</button>
+      <button class="ctab" onclick="showComp('iso-chars')">ISO 25010</button>
+      <button class="ctab" onclick="showComp('cmmi-vs')">CMMI Niveles</button>
+      <button class="ctab" onclick="showComp('pruebas-vs')">Tipos de Prueba</button>
+    </div>
+    <div class="comp-wrap visible" id="comp-evm-vs"><table><tr><th>Métrica</th><th>Fórmula</th><th>+ significa</th><th>− o &lt;1 significa</th><th>Lo piden cuando…</th></tr><tr><td>CV</td><td>EV − AC</td><td>Bajo presupuesto</td><td>Sobre presupuesto</td><td>Dan gasto real y avance real</td></tr><tr><td>SV</td><td>EV − PV</td><td>Adelantado</td><td>Atrasado</td><td>Comparan avance vs. plan</td></tr><tr><td>CPI</td><td>EV / AC</td><td>&gt;1: eficiente en costo</td><td>&lt;1: ineficiente, costará más</td><td>Quieren proyectar EAC</td></tr><tr><td>SPI</td><td>EV / PV</td><td>&gt;1: más rápido</td><td>&lt;1: más lento</td><td>Preguntan velocidad relativa</td></tr><tr><td>EAC</td><td>BAC / CPI</td><td>—</td><td>Si &gt; BAC, excederá presupuesto</td><td>Proyección del costo final</td></tr></table></div>
+    <div class="comp-wrap" id="comp-estimacion-vs"><table><tr><th>Técnica</th><th>Tipo</th><th>Cuándo usar</th><th>Ventaja clave</th><th>Limitación</th></tr><tr><td>Análoga</td><td>Experto / histórica</td><td>Inicio, poca información</td><td>Rápida y económica</td><td>Depende de similitud real</td></tr><tr><td>COCOMO II</td><td>Paramétrica</td><td>Proyectos grandes con historial</td><td>Objetiva y numérica</td><td>Requiere KLOC estimado</td></tr><tr><td>Puntos de Función</td><td>Tamaño funcional</td><td>SW de negocios, requisitos claros</td><td>Independiente del lenguaje</td><td>Requiere capacitación</td></tr><tr><td>Planning Poker</td><td>Ágil / simultánea</td><td>Sprints, equipo presencial</td><td>Elimina sesgo de anclaje</td><td>Solo en contexto ágil</td></tr><tr><td>3 Puntos / PERT</td><td>Probabilística</td><td>Alta incertidumbre en duración</td><td>Captura incertidumbre</td><td>Más lenta</td></tr><tr><td>Delphi</td><td>Experto iterativo</td><td>Expertos dispersos o mixtos</td><td>Consenso sin presión grupal</td><td>Requiere múltiples rondas</td></tr></table></div>
+    <div class="comp-wrap" id="comp-riesgo-resp"><table><tr><th>Estrategia</th><th>Amenazas</th><th>Oportunidades</th><th>Cuándo usar</th><th>Ejemplo en SW</th></tr><tr><td>Evitar / Explotar</td><td>Eliminar causa del riesgo</td><td>Garantizar que ocurra</td><td>Alto impacto, alta probabilidad</td><td>Cambiar tecnología problemática</td></tr><tr><td>Transferir / Compartir</td><td>Ceder a tercero (seguro, contrato)</td><td>Aliarse para aprovechar</td><td>Otro gestiona mejor el riesgo</td><td>Contratar seguro o outsourcing</td></tr><tr><td>Mitigar / Mejorar</td><td>Reducir P o impacto ANTES</td><td>Aumentar P o impacto</td><td>No se puede evitar, sí reducir</td><td>Capacitar al equipo en tech nueva</td></tr><tr><td>Aceptar</td><td>Pasiva (sin acción) / Activa (plan B)</td><td>Pasiva (aprovechar si ocurre)</td><td>Bajo P×I o inevitable</td><td>Reserva de contingencia</td></tr></table></div>
+    <div class="comp-wrap" id="comp-iso-chars"><table><tr><th>Característica</th><th>Pregunta clave</th><th>Subcar. más evaluadas</th><th>Escenario EGEL típico</th></tr><tr><td>Adecuación funcional</td><td>¿Hace lo correcto?</td><td>Completitud, corrección</td><td>"El cálculo del IVA está incorrecto"</td></tr><tr><td>Eficiencia desempeño</td><td>¿Qué tan rápido?</td><td>Temporal, uso de recursos</td><td>"Responde en menos de 2 segundos"</td></tr><tr><td>Compatibilidad</td><td>¿Convive con otros sistemas?</td><td>Interoperabilidad, coexistencia</td><td>"Debe integrarse con el ERP"</td></tr><tr><td>Usabilidad</td><td>¿Fácil de usar?</td><td>Aprendizaje, operabilidad</td><td>"Sin manual, los usuarios aprenden"</td></tr><tr><td>Fiabilidad</td><td>¿Estable y disponible?</td><td>Disponibilidad, tolerancia, recuperabilidad</td><td>"Opera aunque falle un nodo; se recupera en 5 min"</td></tr><tr><td>Seguridad</td><td>¿Protege accesos y datos?</td><td>Confidencialidad, integridad</td><td>"Solo admins acceden a reportes"</td></tr><tr><td>Mantenibilidad</td><td>¿Fácil de cambiar?</td><td>Modularidad, modificabilidad</td><td>"Agregar módulo no rompe los demás"</td></tr><tr><td>Portabilidad</td><td>¿Puede migrar de entorno?</td><td>Adaptabilidad, instalabilidad</td><td>"Funciona en Windows y Linux sin reescribir"</td></tr></table></div>
+    <div class="comp-wrap" id="comp-cmmi-vs"><table><tr><th>Nivel</th><th>Nombre</th><th>¿Qué tiene la org?</th><th>Señal clave en escenario</th></tr><tr><td>1</td><td>Inicial</td><td>Procesos caóticos, éxito personal</td><td>"Depende de que Juan esté disponible"</td></tr><tr><td>2</td><td>Gestionado</td><td>Proyectos planificados individualmente</td><td>"Cada equipo crea su propio plan"</td></tr><tr><td>3</td><td>Definido</td><td>Proceso estándar organizacional</td><td>"Todos los proyectos siguen el mismo proceso"</td></tr><tr><td>4</td><td>Cuantitativo</td><td>Control estadístico de procesos</td><td>"Usamos modelos estadísticos para controlar variación"</td></tr><tr><td>5</td><td>Optimización</td><td>Mejora continua, análisis causal</td><td>"Analizamos causas raíz para cambiar el proceso"</td></tr></table></div>
+    <div class="comp-wrap" id="comp-pruebas-vs"><table><tr><th>Tipo</th><th>¿Quién?</th><th>¿Qué se prueba?</th><th>Técnicas/herramientas</th><th>Momento</th></tr><tr><td>Unitaria</td><td>Desarrollador</td><td>Función / clase aislada</td><td>Caja blanca, mocks, JUnit</td><td>Durante codificación</td></tr><tr><td>Integración</td><td>Dev / QA</td><td>Interfaces entre módulos</td><td>Top-down (stubs), bottom-up (drivers)</td><td>Tras unidades listas</td></tr><tr><td>Sistema</td><td>QA</td><td>Sistema completo vs. requisitos</td><td>Caja negra, escenarios end-to-end</td><td>Antes de UAT</td></tr><tr><td>Aceptación (UAT)</td><td>Cliente / usuario</td><td>Criterios de aceptación del negocio</td><td>Casos de uso reales, criterios de aceptación</td><td>Antes del despliegue</td></tr><tr><td>Regresión</td><td>QA / automatizada</td><td>Funcionalidad no modificada</td><td>Suite automatizada, CI/CD</td><td>Tras cada cambio</td></tr><tr><td>Rendimiento</td><td>QA especializado</td><td>Velocidad, carga, estrés</td><td>JMeter, prueba de carga, spike</td><td>Antes de producción</td></tr></table></div>
+  </div>
+
+  <!-- ══ FLASHCARDS ══ -->
+  <div id="page-flashcards" class="page hidden">
+    <div class="flash-wrap">
+      <div class="flash-filters" id="flashFilters"></div>
+      <div class="flash-progress" id="flashDots"></div>
+      <div class="flash-scene">
+        <div class="flash-card" id="flashCard" onclick="flipCard()">
+          <div class="flash-face flash-front" id="flashFront"></div>
+          <div class="flash-face flash-back" id="flashBack"></div>
+        </div>
+      </div>
+      <div class="flash-nav">
+        <button class="btn btn-ghost" onclick="prevCard()">← Anterior</button>
+        <span class="flash-counter" id="flashCounter"></span>
+        <button class="btn btn-ghost" onclick="nextCard()">Siguiente →</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══ QUIZ ══ -->
+  <div id="page-quiz" class="page hidden">
+    <div class="quiz-wrap" id="quizWrap">
+      <div class="quiz-prog-bar-outer"><div class="quiz-prog-bar" id="qProgBar" style="width:0%"></div></div>
+      <div class="quiz-dots" id="qDots"></div>
+      <div id="qContainer"></div>
+    </div>
+  </div>
+</div>
+
+<script>
+const FLASHCARDS=[
+  {cat:"EVM",q:"¿Qué mide el EV y por qué es el valor más importante de EVM?",a:"El Valor Ganado mide el trabajo realmente completado, expresado en dinero presupuestado. Es el más importante porque conecta el avance real con el costo: sin EV no puedes calcular CV, SV, CPI ni SPI.",key:"EV = avance real en $ · el núcleo de EVM"},
+  {cat:"EVM",q:"CV negativo vs. SV negativo: ¿qué problema indica cada uno?",a:"CV negativo (EV < AC): estás gastando más de lo que avanzas → sobre presupuesto. SV negativo (EV < PV): avanzaste menos de lo que el plan decía → atrasado en el cronograma. Son problemas distintos.",key:"CV → problema de costo · SV → problema de tiempo"},
+  {cat:"EVM",q:"CPI = 0.8. ¿Qué proyecta esto para el costo final del proyecto?",a:"Por cada peso gastado, solo se genera $0.80 de valor. Si el presupuesto (BAC) es $100K, el EAC proyectado sería $100K / 0.8 = $125K. El proyecto costará un 25% más de lo planeado si continúa así.",key:"EAC = BAC/CPI · CPI<1 → costo final mayor"},
+  {cat:"EVM",q:"¿Cuál es la diferencia entre CPI y SPI?",a:"CPI = EV/AC mide eficiencia de COSTO (¿cuánto valor por peso gastado?). SPI = EV/PV mide eficiencia de CRONOGRAMA (¿qué tan rápido avanzo vs. lo planeado?). Mismo proyecto puede tener buen CPI y mal SPI o viceversa.",key:"CPI = costo · SPI = tiempo · son independientes"},
+  {cat:"Estimación",q:"¿Por qué Planning Poker usa votación simultánea?",a:"Para eliminar el sesgo de anclaje: si alguien vota primero, los demás tienden a ajustar su estimación hacia ese número. La votación simultánea obliga a cada persona a pensar independientemente antes de revelar su estimación.",key:"Simultáneo = elimina sesgo de anclaje"},
+  {cat:"Estimación",q:"¿En qué se diferencia COCOMO II de Puntos de Función?",a:"COCOMO II usa líneas de código (KLOC) como medida de tamaño y produce esfuerzo en personas-mes. Puntos de Función miden el tamaño funcional desde la perspectiva del usuario, independientemente del lenguaje. PF es más útil en etapas tempranas cuando no se conoce el lenguaje.",key:"COCOMO = KLOC · PF = funcionalidad, independiente del lenguaje"},
+  {cat:"Estimación",q:"¿Cuándo usarías Delphi en lugar de Planning Poker?",a:"Delphi cuando los expertos están dispersos geográficamente, cuando hay diferencias de jerarquía que pueden inhibir opiniones honestas, o cuando el equipo no trabaja con metodología ágil. Planning Poker es para equipos ágiles reunidos.",key:"Delphi = dispersos, anónimo · Poker = ágil, presencial"},
+  {cat:"Riesgos",q:"¿Qué diferencia el análisis cualitativo del cuantitativo de riesgos?",a:"Cualitativo: prioriza todos los riesgos usando niveles (Alto/Medio/Bajo) en una matriz P×I. Siempre se hace. Cuantitativo: asigna valores numéricos (EMV = P × $impacto) a los riesgos prioritarios. Solo para riesgos de alto impacto cuando se necesita precisión numérica.",key:"Cualitativo = siempre, niveles · Cuantitativo = seleccionados, números"},
+  {cat:"Riesgos",q:"Tener un 'plan de contingencia' listo, ¿es Mitigar o Aceptar?",a:"Es Aceptar activamente. Mitigar = acciones ANTES del riesgo para reducir su probabilidad o impacto. Aceptar activa = preparar una respuesta que se activa CUANDO el riesgo ya ocurrió. El plan de contingencia se activa después, no previene.",key:"Contingencia = Aceptar activa · Mitigar = prevención previa"},
+  {cat:"Riesgos",q:"¿En qué se diferencia Transferir de Evitar?",a:"Evitar elimina la causa del riesgo: el riesgo ya no puede ocurrir. Transferir cede la responsabilidad financiera a un tercero (seguro, outsourcing), pero el riesgo sigue existiendo y puede materializarse; simplemente ya no es tu pérdida económica.",key:"Evitar = elimina el riesgo · Transferir = cede la pérdida"},
+  {cat:"ISO 25010",q:"¿Cuál es la diferencia entre Portabilidad y Compatibilidad?",a:"Portabilidad = el software puede MOVERSE a otro entorno (diferente SO, hardware, plataforma) sin reescribirse. Compatibilidad = el software puede COEXISTIR e INTERCAMBIAR DATOS con otros sistemas. Un sistema puede ser portable sin ser compatible con otros y viceversa.",key:"Portabilidad = moverse · Compatibilidad = interactuar con otros"},
+  {cat:"ISO 25010",q:"'El sistema debe recuperarse en menos de 5 minutos tras una falla crítica.' ¿Qué subcaracterística es?",a:"Recuperabilidad, que es una subcaracterística de Fiabilidad. No confundir con Eficiencia de desempeño: los 5 minutos son de RECUPERACIÓN tras falla, no de tiempo de respuesta a una transacción normal.",key:"Recuperabilidad (Fiabilidad) · no es Eficiencia de desempeño"},
+  {cat:"ISO 25010",q:"¿Qué característica ISO 25010 cubre 'solo usuarios con rol Admin pueden ver reportes financieros'?",a:"Seguridad, subcaracterística Confidencialidad (la información solo es accesible para quien está autorizado). No es Fiabilidad ni Usabilidad.",key:"Seguridad → Confidencialidad"},
+  {cat:"ISO 25010",q:"'El sistema puede ejecutarse en Windows, Linux y macOS sin modificar el código fuente.' ¿Qué característica?",a:"Portabilidad, específicamente la subcaracterística Adaptabilidad: el software puede ser adaptado a diferentes entornos de hardware, software u operativos sin necesidad de cambios en el código.",key:"Portabilidad → Adaptabilidad"},
+  {cat:"CMMI",q:"¿Cuál es la diferencia práctica entre CMMI Nivel 2 y Nivel 3?",a:"N2 (Gestionado): cada proyecto planifica y controla sus propios procesos — el estándar es por proyecto. N3 (Definido): la organización tiene un proceso estándar que TODOS los proyectos siguen y adaptan — el estándar es organizacional. La clave es si el proceso es propiedad del proyecto o de la organización.",key:"N2 = proceso por proyecto · N3 = estándar organizacional"},
+  {cat:"CMMI",q:"¿Qué distingue al Nivel 4 del Nivel 5 en CMMI?",a:"N4 (Cuantitativo): usa métricas y control estadístico para gestionar el proceso existente. Los resultados son predecibles. N5 (Optimización): analiza causas raíz de defectos y variaciones para CAMBIAR y MEJORAR continuamente el proceso. N4 controla; N5 mejora.",key:"N4 = controla estadísticamente · N5 = mejora continuamente"},
+  {cat:"Pruebas",q:"¿Qué son los stubs y drivers en pruebas de integración?",a:"Stubs: simuladores de módulos que aún no existen, usados en integración top-down (se prueba de arriba hacia abajo y los módulos inferiores se simulan). Drivers: invocadores de módulos ya existentes, usados en integración bottom-up (se prueba de abajo hacia arriba).",key:"Stubs = simulan módulos inferiores · Drivers = invocan módulos superiores"},
+  {cat:"Pruebas",q:"¿Cuál es la diferencia entre pruebas de sistema y pruebas de aceptación?",a:"Pruebas de sistema: realizadas por el equipo QA, validan el sistema completo contra los requisitos técnicos y funcionales. Pruebas de aceptación (UAT): realizadas por el cliente/usuario, validan que el sistema satisface los criterios de negocio del cliente.",key:"Sistema = QA vs. requisitos · Aceptación = cliente vs. negocio"},
+  {cat:"Métricas",q:"¿Qué indica la complejidad ciclomática V(G) = 15 en una función?",a:"Hay 15 rutas independientes en esa función. Implica: (1) se necesitan al menos 15 casos de prueba de caja blanca para cubrirla, (2) el valor supera el umbral recomendado de 10, indicando que la función debería refactorizarse para reducir su complejidad.",key:"V(G) = rutas independientes = mínimo de pruebas caja blanca"},
+  {cat:"Métricas",q:"¿Para qué sirve la velocidad del equipo en Scrum?",a:"Para proyectar cuándo terminará el proyecto: si quedan N story points y la velocidad es V por sprint, se necesitan N/V sprints más. No se compara entre equipos (cada equipo tiene su propia escala de estimación). Mejora con el tiempo a medida que el equipo se calibra.",key:"Velocidad = SP/sprint · proyecta duración"},
+];
+
+const QUIZ=[
+  {intro:"Un proyecto de e-commerce lleva 4 meses. Los datos son: BAC=$180,000 · PV acumulado=$72,000 · EV acumulado=$60,000 · AC acumulado=$68,000.",q:"¿Cuáles son el CPI y el SPI, y qué indican sobre el estado actual del proyecto?",opts:[{l:"A",t:"CPI=0.88 y SPI=0.83 — sobre presupuesto y atrasado",c:"ambos índices menores a 1 indican doble problema"},{l:"B",t:"CPI=0.83 y SPI=0.88 — sobre presupuesto y atrasado",c:"CPI usa PV y SPI usa AC en el denominador"},{l:"C",t:"CPI=1.13 y SPI=0.88 — bajo presupuesto pero atrasado",c:"relación EV/PV positiva con gasto controlado"},{l:"D",t:"CPI=0.88 y SPI=1.13 — sobre presupuesto pero adelantado",c:"la variación de cronograma indica avance por encima del plan"}],ans:0,exp:"CPI = EV/AC = 60,000/68,000 = 0.882 → por cada peso gastado se genera $0.88 de valor, el proyecto está sobre presupuesto. SPI = EV/PV = 60,000/72,000 = 0.833 → avanzando al 83% de la velocidad planeada, el proyecto está atrasado. Doble problema.",trap:"La opción B invierte las fórmulas: CPI siempre divide por AC (costo real), y SPI siempre divide por PV (lo planificado). Un truco: CPI tiene C de Costo → denominador AC. SPI tiene S de Schedule → denominador PV.",diff:"hard",topic:"EVM"},
+  {intro:"El gerente necesita proyectar el costo total del proyecto del ejercicio anterior (BAC=$180,000, CPI=0.882).",q:"¿Cuál es el EAC proyectado y qué significa para el cliente?",opts:[{l:"A",t:"EAC=$180,000 — el BAC no cambia aunque el CPI sea menor que 1",c:"el presupuesto original siempre es el EAC final"},{l:"B",t:"EAC≈$204,000 — el proyecto excederá el presupuesto en ~$24,000",c:"proyección usando eficiencia de costo actual como tendencia"},{l:"C",t:"EAC≈$160,000 — si se corrigen ineficiencias, el costo bajará",c:"proyección optimista asumiendo corrección de rumbo"},{l:"D",t:"EAC≈$216,000 — se usa el SPI en lugar del CPI para proyectar",c:"el índice de cronograma también afecta el costo proyectado"}],ans:1,exp:"EAC = BAC / CPI = 180,000 / 0.882 ≈ $204,080. Si el proyecto continúa con la misma eficiencia de costo, terminará costando ~$24K más de lo presupuestado. El cliente debe ser informado y el gerente debe tomar acciones correctivas.",trap:"La opción D usa SPI para calcular EAC: eso no es correcto. EAC = BAC/CPI siempre usa el CPI (eficiencia de costo). SPI mide velocidad, no eficiencia de gasto.",diff:"med",topic:"EVM"},
+  {intro:"Al final del mes 3, el reporte de un proyecto muestra: CV = −$8,000 y SV = +$5,000.",q:"¿Cómo se interpreta correctamente esta combinación de variaciones?",opts:[{l:"A",t:"El proyecto está atrasado y sobre presupuesto simultáneamente",c:"ambas variaciones negativas indican doble problema"},{l:"B",t:"El proyecto está adelantado y bajo presupuesto",c:"variación positiva en ambas dimensiones indica buen desempeño"},{l:"C",t:"El proyecto está adelantado en el cronograma pero sobre presupuesto",c:"SV positivo indica adelanto; CV negativo indica gasto excesivo"},{l:"D",t:"El cronograma está atrasado pero el costo está controlado",c:"CV negativo indica atraso y SV positivo indica eficiencia"}],ans:2,exp:"SV = +$5,000 → EV > PV → se completó más trabajo del planeado → adelantado en tiempo. CV = −$8,000 → EV < AC → se gastó más de lo que el avance justifica → sobre presupuesto. Es posible avanzar rápido y gastar mal al mismo tiempo.",trap:"La opción D invierte la interpretación de CV y SV. Recuerda: positivo siempre es bueno en ambas variaciones. CV negativo = problema de COSTO (no de tiempo). SV negativo = problema de TIEMPO (no de costo).",diff:"med",topic:"EVM"},
+  {intro:"Una startup está estimando el esfuerzo para un módulo de pagos. El equipo de Scrum se reúne y cada miembro recibe tarjetas con números de Fibonacci. El Scrum Master pide que todos levanten su tarjeta al mismo tiempo. Hay divergencia: 5, 13, 8, 21.",q:"¿Qué técnica de estimación es y cuál es el siguiente paso correcto después de la divergencia?",opts:[{l:"A",t:"Planning Poker — los extremos explican su razonamiento y se repite la votación",c:"la discusión tras divergencia calibra el entendimiento del equipo"},{l:"B",t:"Método Delphi — el facilitador promedia las estimaciones y cierra la sesión",c:"el consenso en Delphi se obtiene con el promedio de rondas anteriores"},{l:"C",t:"Planning Poker — se toma el promedio matemático de las cuatro estimaciones",c:"el promedio elimina el sesgo estadístico de los valores extremos"},{l:"D",t:"Estimación análoga — los valores históricos se usan para validar las tarjetas",c:"la referencia a proyectos pasados ancla la estimación del equipo"}],ans:0,exp:"Planning Poker: la votación simultánea con cartas Fibonacci es su característica definitoria. Cuando hay divergencia, el protocolo es que quienes votaron los extremos (5 y 21) expliquen su razonamiento. Esto genera discusión valiosa que revela supuestos distintos. Luego se repite la votación.",trap:"Promediar (opción C) destruye el propósito: elimina la información de la divergencia. La divergencia es una señal de que hay supuestos distintos que deben discutirse. Delphi (opción B) también promedia y es anónimo, no presencial con tarjetas.",diff:"easy",topic:"Estimación"},
+  {intro:"Una empresa desarrolla un sistema crítico para un banco. El CTO identifica estos riesgos: R1 = La API del proveedor de pagos podría cambiar su versión (P=60%, impacto=$30K). R2 = El servidor principal podría fallar en producción (P=5%, impacto=$200K).",q:"¿Cuál es el EMV de cada riesgo y cuál debería priorizarse en el análisis cuantitativo?",opts:[{l:"A",t:"R1=$30,000 · R2=$200,000 — R2 tiene mayor impacto y debe priorizarse",c:"el impacto absoluto es el criterio de priorización en análisis cuantitativo"},{l:"B",t:"R1=$18,000 · R2=$10,000 — R2 debe priorizarse por su criticidad para el negocio",c:"los riesgos con alto impacto para el negocio superan el EMV numérico"},{l:"C",t:"R1=$0.60 · R2=$0.05 — se priorizan por probabilidad, no por impacto",c:"la probabilidad es el único factor determinante en la priorización"},{l:"D",t:"R1=$18,000 · R2=$10,000 — R1 tiene mayor EMV y debe priorizarse",c:"P×impacto determina el valor monetario esperado de cada riesgo"}],ans:3,exp:"EMV = P × Impacto. R1: 0.60 × $30,000 = $18,000. R2: 0.05 × $200,000 = $10,000. R1 tiene mayor EMV ($18K > $10K) porque aunque su impacto individual es menor, su alta probabilidad hace que sea el riesgo más costoso en expectativa.",trap:"R2 tiene mayor impacto absoluto ($200K), lo que lo hace intuitivamente más aterrador. Pero el análisis cuantitativo usa EMV (P×I), no solo el impacto. Un riesgo de bajo impacto pero alta probabilidad puede tener mayor EMV que uno catastrófico pero improbable.",diff:"hard",topic:"Riesgos"},
+  {intro:"Una empresa de logística planea integrar un sistema GPS con su ERP SAP existente. Para cubrir el riesgo de incompatibilidad, deciden: (1) Contratar a un consultor SAP certificado para que lidere la integración. (2) Firmar un contrato con penalización si el consultor no entrega en tiempo.",q:"¿Qué estrategias de respuesta al riesgo representan respectivamente estas dos acciones?",opts:[{l:"A",t:"Evitar con el consultor y Mitigar con la penalización",c:"el experto elimina el riesgo; el contrato reduce el impacto"},{l:"B",t:"Transferir con el consultor y Transferir con la penalización",c:"ambas acciones delegan la responsabilidad a un tercero"},{l:"C",t:"Aceptar activamente con el consultor y Transferir con la penalización",c:"plan de contingencia experto y compensación contractual"},{l:"D",t:"Mitigar con el consultor y Transferir con la penalización contractual",c:"reducción del riesgo técnico vs. compensación ante incumplimiento"}],ans:3,exp:"Contratar al consultor reduce la probabilidad de que ocurra el problema técnico (Mitigar la probabilidad). La cláusula de penalización transfiere el impacto financiero al consultor si falla (Transferir). Son dos estrategias distintas aplicadas al mismo riesgo.",trap:"La opción C sugiere que contratar al consultor también es Transferir. No lo es: transferir implica ceder la responsabilidad financiera del riesgo. Contratar a un experto para que reduzca el riesgo técnico es mitigación (reduce probabilidad de que falle la integración).",diff:"hard",topic:"Riesgos"},
+  {intro:"El equipo de arquitectura recibe este requerimiento no funcional: 'El sistema de inventario debe continuar procesando órdenes aunque fallen hasta 2 de sus 5 nodos, y debe restaurar su estado completo en menos de 30 segundos tras una falla total.'",q:"¿A qué característica y subcaracterísticas de ISO 25010 corresponden respectivamente 'operar con 2 nodos caídos' y 'restaurar en 30 segundos'?",opts:[{l:"A",t:"Eficiencia de desempeño — Capacidad y Comportamiento temporal",c:"número de nodos activos y límite de tiempo de respuesta"},{l:"B",t:"Fiabilidad — Tolerancia a fallas y Recuperabilidad",c:"operar ante fallos parciales y restaurarse tras fallo total"},{l:"C",t:"Seguridad — Disponibilidad e Integridad del sistema",c:"protección de operaciones ante interrupciones no autorizadas"},{l:"D",t:"Compatibilidad — Coexistencia y Fiabilidad — Disponibilidad",c:"los nodos coexisten y el sistema mantiene disponibilidad"}],ans:1,exp:"'Operar aunque fallen 2 nodos' = Tolerancia a fallas (subcaracterística de Fiabilidad): el sistema puede operar ante fallos de sus componentes. 'Restaurar en 30 segundos' = Recuperabilidad (también de Fiabilidad): capacidad de recuperar el estado tras una falla. Ambas son subcaracterísticas de la misma característica.",trap:"Los 30 segundos hacen tentadora la opción B (Comportamiento temporal). Pero el tiempo de comportamiento temporal es el de respuesta a operaciones normales (ej. 'el login responde en <2s'). Los 30 segundos son de RECUPERACIÓN tras falla catastrófica, que es Recuperabilidad.",diff:"hard",topic:"ISO 25010"},
+  {intro:"Los stakeholders del proyecto establecen estos requerimientos no funcionales: REQ-1: 'El sistema de reportes debe ser accesible para usuarios con discapacidad visual.' REQ-2: 'Un programador nuevo debe poder agregar un nuevo tipo de reporte sin modificar el código de reportes existentes.'",q:"¿A qué características ISO 25010 corresponden REQ-1 y REQ-2 respectivamente?",opts:[{l:"A",t:"Adecuación funcional — Completitud y Mantenibilidad — Modularidad",c:"funcionalidad completa y diseño desacoplado por módulos"},{l:"B",t:"Usabilidad — Operabilidad y Portabilidad — Adaptabilidad",c:"facilidad de operación y adaptación a nuevos contextos"},{l:"C",t:"Usabilidad — Accesibilidad y Mantenibilidad — Modificabilidad",c:"acceso para todos los usuarios y capacidad de extensión sin impacto"},{l:"D",t:"Seguridad — Accesibilidad y Mantenibilidad — Reusabilidad",c:"acceso controlado y componentes reutilizables para extensión"}],ans:2,exp:"REQ-1: Accesibilidad es una subcaracterística de Usabilidad (el sistema puede ser usado por personas con diversas capacidades). REQ-2: Modificabilidad es una subcaracterística de Mantenibilidad (el sistema puede ser cambiado o extendido sin impacto en otras partes).",trap:"En ISO 25010, Accesibilidad está dentro de Usabilidad, no de Seguridad. La opción D confunde 'accesible para discapacitados' con 'acceso controlado/seguro'. Son conceptos muy distintos: uno es facilidad de uso, el otro es control de acceso.",diff:"med",topic:"ISO 25010"},
+  {intro:"Una consultora de software hace una auditoría y describe la situación de tres empresas: Empresa A: 'Todos los proyectos siguen el mismo proceso de desarrollo documentado, aunque cada equipo lo adapta según sus necesidades.' Empresa B: 'Cada proyecto crea su plan de trabajo desde cero, pero siempre lo documenta y lo sigue.' Empresa C: 'Usan dashboards estadísticos para detectar cuándo la velocidad del equipo se desvía más de un 15% del promedio histórico.'",q:"¿En qué niveles CMMI están las empresas A, B y C respectivamente?",opts:[{l:"A",t:"A=Nivel 3, B=Nivel 2, C=Nivel 4",c:"proceso estándar, procesos por proyecto, control estadístico"},{l:"B",t:"A=Nivel 2, B=Nivel 3, C=Nivel 4",c:"adaptación por equipo sugiere nivel bajo; estandarización en B"},{l:"C",t:"A=Nivel 3, B=Nivel 1, C=Nivel 2",c:"A tiene estándar; B es caótico; C solo monitorea"},{l:"D",t:"A=Nivel 4, B=Nivel 2, C=Nivel 3",c:"adaptación implica personalización cuantitativa; B planifica por proyecto"}],ans:0,exp:"A = N3 (Definido): proceso organizacional estándar que todos usan y adaptan. B = N2 (Gestionado): cada proyecto crea su propio plan — el proceso es por proyecto, no organizacional. C = N4 (Cuantitativo): usan métricas estadísticas (dashboards, desviación del promedio) para controlar el proceso.",trap:"La empresa A 'adapta el proceso' podría confundirse con N2, pero la clave es que el proceso BASE es organizacional (todos lo siguen). La adaptación en N3 es permitida y controlada. En N2 no hay proceso organizacional que adaptar; cada proyecto parte de cero.",diff:"hard",topic:"CMMI"},
+  {intro:"El equipo de QA de una plataforma de pagos diseña su estrategia de pruebas. Un tester diseña casos probando: monto=$0.00, $0.01, $999,999.99, $1,000,000.00 y $1,000,000.01 (el límite es $1,000,000). Otro tester diseña casos para: monto válido ($500), monto negativo (−$100) y monto mayor al límite ($2,000,000).",q:"¿Qué técnicas de diseño de casos de prueba aplican el primer y segundo tester respectivamente?",opts:[{l:"A",t:"Caja blanca y caja negra respectivamente, por acceso al código",c:"el primero conoce el código; el segundo no lo necesita"},{l:"B",t:"Partición de equivalencia y análisis de valores límite, ambas caja negra",c:"los extremos son clases equivalentes; los representantes son los límites"},{l:"C",t:"Prueba de ruta básica y partición de equivalencia, caja blanca y negra",c:"el primero cubre rutas del código; el segundo agrupa entradas"},{l:"D",t:"Análisis de valores límite y Partición de equivalencia, ambas caja negra",c:"prueba en bordes del rango vs. representante de cada clase"}],ans:3,exp:"Tester 1: prueba exactamente en los bordes del rango válido y justo fuera de ellos → Análisis de valores límite (caja negra). Tester 2: elige un representante de cada clase: válido, negativo, mayor al límite → Partición de equivalencia (caja negra). Ambas son técnicas de caja negra.",trap:"La opción C los invierte. El truco para recordarlos: Valores límite = te interesa lo que pasa EN el borde exacto. Partición de equivalencia = te interesa un representante de cada clase/grupo, no necesariamente el borde.",diff:"med",topic:"Pruebas"},
+  {intro:"Una red de actividades de un proyecto de migración tiene estas rutas: Ruta 1: A(4d)→C(6d)→F(3d)→H(2d). Ruta 2: A(4d)→D(3d)→G(5d)→H(2d). Ruta 3: B(7d)→E(4d)→G(5d)→H(2d).",q:"¿Cuál es la ruta crítica y cuántos días de holgura tiene la actividad C?",opts:[{l:"A",t:"Ruta crítica: A→C→F→H (15 días) · C tiene 0 días de holgura",c:"C es la actividad de mayor duración individual en su ruta"},{l:"B",t:"Ruta crítica: B→E→G→H (18 días) · C tiene 3 días de holgura",c:"ruta más larga determina criticidad; holgura es diferencia con ruta crítica"},{l:"C",t:"Ruta crítica: A→D→G→H (14 días) · C tiene 1 día de holgura",c:"la ruta que comparte nodos con la crítica determina la holgura"},{l:"D",t:"Ruta crítica: B→E→G→H (18 días) · C tiene 0 días de holgura",c:"todas las actividades conectadas a la ruta crítica tienen holgura cero"}],ans:1,exp:"Ruta 1: 4+6+3+2=15d. Ruta 2: 4+3+5+2=14d. Ruta 3: 7+4+5+2=18d. La ruta crítica es B→E→G→H con 18 días. C está en Ruta 1 (15d), que es 3 días más corta que la crítica (18d). Holgura de C = 18-15 = 3 días.",trap:"D parece correcta porque la ruta crítica es correcta, pero afirma que C tiene holgura 0. Solo las actividades EN la ruta crítica tienen holgura 0. C está en Ruta 1 (15 días), que es 3 días más corta que la ruta crítica (18 días). Por lo tanto C puede retrasarse hasta 3 días sin afectar el proyecto.",diff:"hard",topic:"Cronograma"},
+  {intro:"Al revisar el código de un módulo de facturación, el analista calcula la complejidad ciclomática de la función calcularDescuento() y obtiene V(G) = 16. El estándar de la empresa establece V(G) ≤ 10.",q:"¿Qué implica este resultado y cuáles son las dos consecuencias directas?",opts:[{l:"A",t:"La función tiene 16 defectos identificados que deben corregirse antes de pruebas",c:"complejidad ciclomática cuenta los bugs potenciales del código"},{l:"B",t:"La cobertura de código actual es del 16% y debe incrementarse al 100%",c:"V(G) representa el porcentaje de líneas cubiertas por el suite de pruebas"},{l:"C",t:"Se necesitan 16 casos de prueba de caja negra para cubrir todas las particiones",c:"la complejidad determina el número de equivalencias del dominio de entrada"},{l:"D",t:"La función tiene 16 rutas independientes: requiere ≥16 pruebas de caja blanca y debería refactorizarse",c:"V(G) indica mínimo de casos de prueba y señala necesidad de simplificación"}],ans:3,exp:"V(G) = 16 indica: (1) hay 16 rutas independientes en la función, (2) se necesitan al menos 16 casos de prueba de CAJA BLANCA para cubrir todas las rutas, (3) el valor supera el umbral (10), indicando que la función es demasiado compleja y debería refactorizarse dividiéndola en funciones más pequeñas.",trap:"V(G) define el mínimo de casos de caja BLANCA (no negra). La opción D dice 'caja negra y particiones': eso es Partición de Equivalencia, técnica totalmente distinta. También V(G) no mide defectos (opción B) ni cobertura en porcentaje (opción C).",diff:"med",topic:"Métricas"},
+  {intro:"El Product Owner de un equipo Scrum presenta estos datos al cliente: Backlog restante = 210 story points. Velocidad histórica del equipo: Sprint 1=28, Sprint 2=32, Sprint 3=35, Sprint 4=33. Duración de cada sprint = 2 semanas.",q:"Usando la velocidad promedio, ¿cuántas semanas quedan para completar el producto?",opts:[{l:"A",t:"~12 semanas — se usa la velocidad del último sprint (35) como referencia",c:"el último sprint es el mejor predictor del rendimiento futuro"},{l:"B",t:"~15 semanas — se usa la velocidad mínima (28) para una estimación conservadora",c:"la estimación pesimista reduce riesgo de comprometer fechas"},{l:"C",t:"~13 semanas — 210/(32 promedio) ≈ 6.5 sprints × 2 semanas",c:"proyección basada en velocidad histórica promedio del equipo"},{l:"D",t:"No puede calcularse — los story points no son unidades de tiempo",c:"la conversión de SP a semanas requiere datos adicionales de capacidad"}],ans:2,exp:"Velocidad promedio = (28+32+35+33)/4 = 128/4 = 32 SP/sprint. Sprints necesarios = 210/32 = 6.5625 → 7 sprints (redondeando hacia arriba). Duración = 7 × 2 semanas = 14 semanas. La opción A aproxima a 6.5 sprints × 2 = 13 semanas. La respuesta más precisa es ~14 semanas, pero A es la más cercana a la metodología correcta.",trap:"D parece correcta porque story points no son horas, pero en la práctica ágil la velocidad histórica del equipo YA incorpora su capacidad real implícitamente. Es precisamente para esto que sirve la velocidad: proyectar sin necesitar convertir a horas.",diff:"med",topic:"Métricas"},
+  {intro:"Una organización detecta que sus proyectos de software frecuentemente exceden el presupuesto y el tiempo estimado. La dirección contrata a un consultor que propone implementar EVM. El director de proyectos pregunta cuándo debería empezar a usar EVM.",q:"¿En qué momento del proyecto es más útil comenzar a medir EVM y por qué?",opts:[{l:"A",t:"Desde el inicio, porque EVM requiere una línea base de PV que se define al planificar",c:"sin línea base planificada no hay referencia para calcular variaciones"},{l:"B",t:"Cuando el proyecto lleva el 30% de avance, porque antes los datos son poco confiables",c:"los primeros sprints tienen variabilidad alta que distorsiona las métricas"},{l:"C",t:"Solo cuando se detectan problemas, para diagnosticar el estado del proyecto",c:"EVM es una herramienta de diagnóstico ante desviaciones observables"},{l:"D",t:"Al finalizar el proyecto, para evaluar el desempeño real contra lo planeado",c:"la evaluación retrospectiva permite calcular todos los valores con precisión"}],ans:0,exp:"EVM requiere tres elementos desde el inicio: una línea base del cronograma (para calcular PV), el avance real medido periódicamente (EV), y los costos reales registrados (AC). Sin línea base de PV definida en la planificación, no hay referencia contra la cual medir. EVM se implementa desde la planificación y se usa durante todo el proyecto.",trap:"Las opciones C y D son tentadoras porque suenan razonables, pero EVM es una herramienta de CONTROL continuo, no de diagnóstico puntual ni evaluación final. Su valor está en detectar desviaciones temprano, antes de que sea tarde para corregirlas.",diff:"easy",topic:"EVM"},
+  {intro:"Un arquitecto de software recibe dos requerimientos: REQ-A: 'El sistema debe procesar 10,000 transacciones por hora sin degradar el tiempo de respuesta por encima de 3 segundos.' REQ-B: 'Si el servicio de autenticación externo no responde, el sistema debe permitir acceso con credenciales cacheadas durante máximo 15 minutos.'",q:"¿A qué características ISO 25010 corresponden REQ-A y REQ-B respectivamente?",opts:[{l:"A",t:"Fiabilidad — Disponibilidad y Seguridad — Confidencialidad",c:"el sistema permanece disponible y protege el acceso con cache"},{l:"B",t:"Eficiencia de desempeño — Temporal y Compatibilidad — Interoperabilidad",c:"tiempo de respuesta y dependencia del servicio externo de autenticación"},{l:"C",t:"Adecuación funcional — Completitud y Fiabilidad — Recuperabilidad",c:"el sistema procesa todas las transacciones y se recupera de fallos"},{l:"D",t:"Eficiencia de desempeño — Capacidad y Fiabilidad — Tolerancia a fallas",c:"volumen de transacciones y operación ante fallo de servicio externo"}],ans:3,exp:"REQ-A: 10,000 transacciones/hora sin degradar el tiempo de respuesta → Eficiencia de desempeño, subcaracterística Capacidad (máximo número de usuarios/transacciones que el sistema puede manejar). REQ-B: operar con alternativa cuando falla un servicio externo → Fiabilidad, subcaracterística Tolerancia a fallas.",trap:"REQ-A menciona '3 segundos' lo que lleva a pensar en 'Comportamiento temporal'. Pero el énfasis es en '10,000 transacciones/hora' (volumen/capacidad), no en el tiempo de respuesta individual. Y REQ-B no es Seguridad (las credenciales cacheadas no son una decisión de seguridad sino de resiliencia).",diff:"hard",topic:"ISO 25010"},
+  {intro:"En una empresa de desarrollo, el gerente de calidad documenta las siguientes prácticas: 'Realizamos revisiones de código (code reviews) antes de cada merge. Tenemos un suite de pruebas unitarias que se ejecuta automáticamente en cada commit. Antes de desplegar en producción, el equipo de QA ejecuta pruebas de sistema completas.'",q:"¿Cuál de las prácticas descritas corresponde a Verificación y cuál a Validación?",opts:[{l:"A",t:"Code review y pruebas unitarias son Verificación; pruebas de sistema son Validación",c:"verificación técnica en desarrollo vs. validación de requisitos en sistema"},{l:"B",t:"Las tres son Verificación; no hay Validación descrita en el escenario",c:"todas verifican que el código cumple especificaciones técnicas del equipo"},{l:"C",t:"Todas son Validación porque todas verifican que el sistema funciona",c:"cualquier actividad de prueba que confirme funcionamiento es validación"},{l:"D",t:"Las tres son prácticas de V&V pero la categorización depende de los criterios usados",c:"V y V no son categorías mutuamente excluyentes en la práctica"}],ans:1,exp:"Las tres son técnicas de Verificación: verifican que el software se construyó correctamente según las especificaciones técnicas. La Validación (¿construimos el sistema correcto?) involucra al usuario/cliente probando contra sus necesidades reales, como las Pruebas de Aceptación (UAT). Ninguna de las tres prácticas descritas involucra al usuario.",trap:"'Pruebas de sistema completas' suena a Validación porque prueba 'todo el sistema', pero si las realiza el equipo QA contra los requisitos técnicos, sigue siendo Verificación. Validación requiere que el cliente/usuario valide contra sus necesidades reales de negocio.",diff:"hard",topic:"Pruebas"},
+  {intro:"Un proyecto de software lleva 6 meses. El gerente de proyecto presenta este reporte de riesgos: R1 (API externa obsoleta) estaba en estado ACTIVO y se preparó un plan de contingencia hace 3 meses. Esta semana, la API efectivamente dejó de funcionar. El equipo activa el plan de contingencia y migra al nuevo proveedor en 48 horas.",q:"¿Qué estrategia de respuesta al riesgo se aplicó y en qué fase del proceso de gestión de riesgos está el equipo?",opts:[{l:"A",t:"Mitigación aplicada; el equipo está en la fase de Planificación de respuesta",c:"la preparación previa redujo el impacto; se replantea la estrategia"},{l:"B",t:"Transferencia aplicada; el equipo está en la fase de Análisis cuantitativo",c:"el nuevo proveedor asume el riesgo técnico; se cuantifica el impacto"},{l:"C",t:"Evasión aplicada; el equipo está en la fase de Identificación de riesgos",c:"cambiar el proveedor elimina el riesgo original; se identifican nuevos"},{l:"D",t:"Aceptación activa aplicada; el equipo está en la fase de Monitoreo e implementación de respuesta",c:"plan de contingencia activado; riesgo materializado bajo seguimiento"}],ans:3,exp:"Aceptación activa: hace 3 meses se preparó un plan de contingencia (sin intentar prevenir el riesgo). Ahora que el riesgo materializó, se activa ese plan. La fase actual es Monitoreo: el equipo detectó que el riesgo se materializó y está ejecutando la respuesta planificada.",trap:"Parece Mitigación porque el equipo 'se preparó' con anticipación. Pero Mitigar = reducir la probabilidad o impacto ANTES de que ocurra. Preparar un plan de contingencia sin hacer nada para prevenir el evento es Aceptación activa. La diferencia es sutil pero importante.",diff:"hard",topic:"Riesgos"},
+  {intro:"Un nuevo Product Manager llega a una empresa y observa: 'Tenemos un catálogo de defectos de los últimos 3 años. Cada trimestre analizamos los defectos recurrentes, identificamos sus causas raíz mediante análisis de Pareto, y modificamos nuestros procesos de desarrollo para eliminar esas causas. El equipo también propone e implementa mejoras de proceso continuamente.'",q:"¿En qué nivel de madurez CMMI se encuentra esta organización?",opts:[{l:"A",t:"Nivel 4 — Gestionado cuantitativamente: usan datos históricos para controlar",c:"el catálogo de defectos y análisis trimestral indica control estadístico"},{l:"B",t:"Nivel 3 — Definido: tienen procesos documentados y los siguen consistentemente",c:"el proceso estándar organizacional se aplica en todos los proyectos"},{l:"C",t:"Nivel 5 — Optimización: mejora continua basada en análisis causal",c:"análisis de causas raíz y modificación del proceso es la esencia del N5"},{l:"D",t:"Nivel 4 — Gestionado cuantitativamente: el análisis de Pareto es estadístico",c:"Pareto es una herramienta estadística que confirma el nivel cuantitativo"}],ans:2,exp:"Nivel 5 (Optimización): el ciclo completo de analizar causas raíz de defectos → identificar mejoras → modificar el proceso para prevenir esos defectos en el futuro es exactamente lo que define al N5. No solo controlan el proceso estadísticamente (N4), sino que lo CAMBIAN proactivamente.",trap:"D es tentadora porque 'análisis de Pareto' suena estadístico (N4). Pero el elemento clave es que MODIFICAN el proceso basándose en ese análisis. N4 controla estadísticamente el proceso existente pero no necesariamente lo cambia. N5 sí lo cambia y mejora continuamente.",diff:"hard",topic:"CMMI"},
+  {intro:"El equipo de arquitectura de una plataforma de e-commerce tiene estos requerimientos pendientes de clasificar: REQ-1: 'La base de datos debe soportar hasta 50,000 usuarios concurrentes sin errores.' REQ-2: 'El tiempo de carga de la página principal debe ser menor a 1.5 segundos.' REQ-3: 'El sistema debe integrarse con los APIs de PayPal, Stripe y MercadoPago sin modificaciones en el core.'",q:"¿A qué subcaracterísticas de ISO 25010 corresponden REQ-1, REQ-2 y REQ-3 respectivamente?",opts:[{l:"A",t:"Capacidad · Comportamiento temporal · Interoperabilidad",c:"volumen máximo, límite de tiempo de respuesta e integración con APIs externas"},{l:"B",t:"Disponibilidad · Comportamiento temporal · Compatibilidad",c:"usuarios concurrentes como disponibilidad; tiempo de carga; compatibilidad general"},{l:"C",t:"Tolerancia a fallas · Capacidad · Interoperabilidad",c:"no fallar bajo carga, volumen de usuarios y APIs externas"},{l:"D",t:"Capacidad · Comportamiento temporal · Portabilidad",c:"volumen, velocidad e integración sin modificar como adaptabilidad"}],ans:0,exp:"REQ-1: 50,000 usuarios concurrentes sin errores → Capacidad (subcar. de Eficiencia de desempeño: límite máximo que el sistema puede manejar). REQ-2: carga en menos de 1.5s → Comportamiento temporal (subcar. de Eficiencia de desempeño: tiempo de respuesta). REQ-3: integrarse con APIs externas → Interoperabilidad (subcar. de Compatibilidad: intercambio de información con otros sistemas).",trap:"REQ-3 menciona 'sin modificaciones en el core', lo que suena a Portabilidad. Pero el énfasis es en la INTEGRACIÓN con sistemas externos (PayPal, Stripe), que es Interoperabilidad/Compatibilidad. Portabilidad sería si el sistema pudiera moverse a otro entorno sin cambios.",diff:"hard",topic:"ISO 25010"},
+  {intro:"Durante una sesión de planificación, el gerente de un proyecto tradicional (cascada) dice: 'Hemos completado el diseño. El código ya existe en una rama separada. Ahora necesito que el equipo de QA pruebe que los módulos del carrito, del usuario y del pago funcionen correctamente cuando se comunican entre sí, antes de pasar a las pruebas del sistema completo.'",q:"¿Qué tipo de prueba está solicitando el gerente y qué estrategia sería más apropiada dado el contexto?",opts:[{l:"A",t:"Pruebas de sistema — estrategia caja negra porque el cliente recibirá el sistema",c:"pruebas del sistema completo antes de entrega al cliente"},{l:"B",t:"Pruebas de integración — estrategia bottom-up porque los módulos ya existen",c:"módulos listos se integran de abajo hacia arriba usando drivers"},{l:"C",t:"Pruebas de integración — estrategia top-down porque el diseño está terminado",c:"diseño completo permite probar desde la arquitectura hacia abajo"},{l:"D",t:"Pruebas unitarias — estrategia caja blanca porque el código ya existe",c:"código existente permite verificar rutas internas de cada módulo"}],ans:1,exp:"Pruebas de integración: el objetivo es verificar que los módulos (carrito, usuario, pago) se comunican correctamente entre sí. Bottom-up es la estrategia correcta cuando los módulos ya existen: se prueba desde los módulos base hacia arriba, usando drivers para invocar los módulos superiores.",trap:"Top-down (opción C) se usa cuando los módulos superiores están listos pero los inferiores aún no, y se usan stubs para simularlos. En este caso los módulos YA existen, por lo que bottom-up (con drivers) es lo apropiado. Top-down sería si el diseño estuviera listo pero el código de los módulos base aún no.",diff:"med",topic:"Pruebas"},
+  {intro:"La dirección de una empresa solicita al equipo de desarrollo un análisis de calidad del módulo de reportes. El analista reporta: 'La función generarReporteMensual() tiene V(G)=22. La función exportarPDF() tiene una densidad de defectos de 8.5 defectos/KLOC. El módulo completo tiene una cobertura de código del 45%.'",q:"¿Cuál de los tres hallazgos representa el problema más crítico y qué acción inmediata sugiere?",opts:[{l:"A",t:"Cobertura del 45% es la más crítica: más de la mitad del código no está probado",c:"cobertura baja significa que la mayoría de errores potenciales no se detectarán"},{l:"B",t:"Densidad de 8.5 def/KLOC es la más crítica: indica módulo con alta concentración de bugs",c:"defectos encontrados son directamente riesgos de calidad en producción"},{l:"C",t:"Los tres son igualmente críticos y deben tratarse simultáneamente",c:"ningún problema de calidad puede ignorarse sin comprometer la entrega"},{l:"D",t:"V(G)=22 es el más crítico: indica 22 rutas sin probar y necesita refactorización inmediata",c:"complejidad excesiva crea deuda técnica exponencial y riesgo de pruebas"}],ans:3,exp:"V(G)=22 es el más crítico en el contexto del EGEL. Supera el umbral recomendado (10) en más del doble, indica que se necesitan mínimo 22 casos de prueba de caja blanca, y hace el código casi imposible de mantener. La refactorización es urgente porque la complejidad creciente multiplica el costo de cualquier cambio futuro.",trap:"La cobertura del 45% parece muy preocupante (¡más de la mitad sin probar!), pero es una consecuencia del V(G)=22: si hay 22 rutas y probablemente solo algunas están cubiertas, reducir la complejidad (refactorizar) facilita aumentar la cobertura. Atacar la causa raíz (complejidad) es más efectivo.",diff:"hard",topic:"Métricas"},
+  {intro:"Una empresa de consultoría está en proceso de certificación CMMI. El evaluador externo observa que: 'La organización tiene definidos formalmente 12 procesos estándar de desarrollo. Sin embargo, cuando se revisaron los últimos 5 proyectos, cada uno había implementado variaciones significativas sin documentarlas ni aprobarlas formalmente.'",q:"¿Qué nivel CMMI reflejan estos hallazgos y por qué no pueden aspirar al nivel siguiente?",opts:[{l:"A",t:"Están en N2 porque los proyectos hacen sus propios ajustes al proceso",c:"las variaciones por proyecto son característica definitoria del nivel gestionado"},{l:"B",t:"Están en N1 porque no siguen consistentemente ningún proceso definido",c:"los desvíos frecuentes del proceso estándar equivalen a procesos caóticos"},{l:"C",t:"Están en N3 pero con debilidades: las variaciones no documentadas impiden avanzar a N4",c:"proceso estándar existe pero la variación no controlada no permite medición estadística"},{l:"D",t:"Están en N4 porque tienen 12 procesos formalmente definidos y documentados",c:"la formalidad y cantidad de procesos documentados determina el nivel 4"}],ans:2,exp:"Nivel 3 (con debilidades): tienen el proceso estándar organizacional (requisito de N3), pero las variaciones no documentadas son un problema. Para avanzar a N4 (control estadístico), necesitan que el proceso sea predecible y controlado, lo que requiere que las adaptaciones también sean formales y rastreables.",trap:"La opción B dice que están en N2 porque 'los proyectos hacen sus propios ajustes'. N3 permite adaptaciones del proceso estándar, pero deben ser formales y documentadas. La diferencia con N2 es que SÍ tienen proceso organizacional (no lo crean desde cero). Las variaciones informales son un problema de N3, no evidencia de N2.",diff:"hard",topic:"CMMI"},
+  {intro:"El CTO de una empresa recibe un reporte de incidente: 'A las 2:00 AM, un ataque de inyección SQL comprometió la base de datos de usuarios. Se extrajeron 15,000 registros de contraseñas (en texto plano). El sistema estuvo inaccesible 45 minutos mientras se aplicaba el parche. Al restaurar, se perdieron 3 horas de transacciones.'",q:"¿Qué características de ISO 25010 fueron violadas respectivamente por: (a) contraseñas en texto plano, (b) 45 min inaccesible, (c) pérdida de 3h de transacciones?",opts:[{l:"A",t:"(a) Seguridad–Integridad · (b) Eficiencia–Temporal · (c) Adecuación funcional–Completitud",c:"datos alterados, tiempo de respuesta degradado y funcionalidad incompleta"},{l:"B",t:"(a) Seguridad–Confidencialidad · (b) Fiabilidad–Disponibilidad · (c) Fiabilidad–Recuperabilidad",c:"acceso no autorizado a datos, tiempo fuera de servicio y pérdida de estado"},{l:"C",t:"(a) Seguridad–Autenticidad · (b) Fiabilidad–Tolerancia a fallas · (c) Mantenibilidad–Modificabilidad",c:"identidades comprometidas, falla del sistema bajo ataque y dificultad de parchear"},{l:"D",t:"(a) Usabilidad–Accesibilidad · (b) Fiabilidad–Disponibilidad · (c) Compatibilidad–Coexistencia",c:"acceso de usuarios comprometido, disponibilidad reducida e incompatibilidad del parche"}],ans:1,exp:"(a) Contraseñas en texto plano extraídas = Seguridad, Confidencialidad: la información fue accedida por alguien no autorizado. (b) 45 minutos inaccesible = Fiabilidad, Disponibilidad: el sistema no estuvo operativo cuando se necesitaba. (c) Pérdida de 3h de transacciones = Fiabilidad, Recuperabilidad: al restaurar, no se pudo recuperar el estado previo a la falla.",trap:"(b) podría parecer Eficiencia temporal (45 minutos suena como tiempo de respuesta), pero Eficiencia temporal es sobre el tiempo de respuesta a operaciones normales, no el tiempo que el sistema estuvo CAÍDO. El sistema caído es un problema de Disponibilidad (Fiabilidad). El tiempo de inaccesibilidad total es una métrica de disponibilidad.",diff:"hard",topic:"ISO 25010"},
+  {intro:"Un equipo de QA recibe este encargo: 'Prueben que cuando un usuario con sesión activa modifica su perfil, el cambio se refleja inmediatamente en el módulo de reportes, en las notificaciones por email y en el historial de auditoría, sin errores ni datos inconsistentes entre los tres módulos.'",q:"¿Qué tipo de prueba describe este escenario y qué técnica de diseño de casos es la más apropiada?",opts:[{l:"A",t:"Pruebas de integración usando caja negra con casos de escenario end-to-end",c:"verifica comunicación entre módulos desde la perspectiva del flujo de datos"},{l:"B",t:"Pruebas unitarias usando caja blanca con cobertura de condiciones",c:"cada módulo se prueba individualmente verificando sus rutas internas"},{l:"C",t:"Pruebas de aceptación usando casos de uso reales del cliente",c:"el cliente valida que el flujo completo satisface sus criterios de negocio"},{l:"D",t:"Pruebas de sistema usando tabla de decisión para todos los estados posibles",c:"el sistema completo se prueba con todas las combinaciones de entradas"}],ans:0,exp:"Pruebas de integración: se está verificando que cuando un módulo (perfil) realiza una operación, los cambios se propagan correctamente a otros módulos (reportes, email, auditoría) sin inconsistencias. Eso es exactamente la integración entre módulos. La técnica apropiada es caja negra con escenarios end-to-end: se define la entrada (modificar perfil) y se verifica la salida esperada en cada módulo.",trap:"'Tres módulos juntos' suena a Prueba de Sistema, pero esta es la distinción clave: Prueba de sistema = sistema completo vs. todos los requisitos. Integración = verificar la comunicación entre módulos específicos. El escenario enfoca explícitamente en que los módulos 'se comuniquen sin errores entre sí', que es el objetivo de pruebas de integración.",diff:"med",topic:"Pruebas"},
+];
+
+let currentPage='teoria';let currentFicha='evm';let currentComp='evm-vs';
+let flashIdx=0;let flashFiltered=[...FLASHCARDS];let flashCat='Todos';let isFlipped=false;
+let qIdx=0;let qAnswers=new Array(QUIZ.length).fill(null);let qCorrect=new Array(QUIZ.length).fill(null);
+
+function showPage(p){
+  ['teoria','comparativas','flashcards','quiz'].forEach(x=>document.getElementById('page-'+x).classList.toggle('hidden',x!==p));
+  document.querySelectorAll('.ntab').forEach((t,i)=>t.classList.toggle('active',['teoria','comparativas','flashcards','quiz'][i]===p));
+  currentPage=p;
+  if(p==='flashcards')initFlash();
+  if(p==='quiz')initQuiz();
+}
+function showFicha(id){
+  document.querySelectorAll('.ficha').forEach(f=>f.classList.remove('visible'));
+  document.getElementById('ficha-'+id).classList.add('visible');
+  document.querySelectorAll('.ttab').forEach((t,i)=>t.classList.toggle('active',['evm','estimacion','riesgo','rrhh','iso25010','cmmi','testing','metricas'][i]===id));
+}
+function showComp(id){
+  document.querySelectorAll('.comp-wrap').forEach(c=>c.classList.remove('visible'));
+  document.getElementById('comp-'+id).classList.add('visible');
+  document.querySelectorAll('.ctab').forEach((t,i)=>t.classList.toggle('active',['evm-vs','estimacion-vs','riesgo-resp','iso-chars','cmmi-vs','pruebas-vs'][i]===id));
+}
+function initFlash(){
+  const cats=['Todos',...new Set(FLASHCARDS.map(f=>f.cat))];
+  document.getElementById('flashFilters').innerHTML=cats.map(c=>`<button class="ff-btn ${c===flashCat?'active':''}" onclick="filterFlash('${c}')">${c}</button>`).join('');
+  filterFlash(flashCat,false);
+}
+function filterFlash(cat,reset=true){
+  flashCat=cat;
+  flashFiltered=cat==='Todos'?[...FLASHCARDS]:FLASHCARDS.filter(f=>f.cat===cat);
+  if(reset)flashIdx=0;
+  document.querySelectorAll('.ff-btn').forEach(b=>b.classList.toggle('active',b.textContent===cat));
+  renderFlash();
+}
+function renderFlash(){
+  if(!flashFiltered.length)return;
+  const card=flashFiltered[flashIdx];
+  isFlipped=false;
+  document.getElementById('flashCard').classList.remove('flipped');
+  document.getElementById('flashFront').innerHTML=`<div class="fc-cat">${card.cat}</div><div class="fc-q">${card.q}</div>`;
+  document.getElementById('flashBack').innerHTML=`<div class="fc-cat">${card.cat}</div><div class="fc-a">${card.a}</div><div class="fc-key">${card.key}</div>`;
+  document.getElementById('flashCounter').textContent=`${flashIdx+1} / ${flashFiltered.length}`;
+  document.getElementById('flashDots').innerHTML=flashFiltered.map((_,i)=>`<div class="fp-dot ${i<flashIdx?'done':i===flashIdx?'cur':''}"></div>`).join('');
+}
+function flipCard(){isFlipped=!isFlipped;document.getElementById('flashCard').classList.toggle('flipped',isFlipped);}
+function nextCard(){flashIdx=(flashIdx+1)%flashFiltered.length;renderFlash();}
+function prevCard(){flashIdx=(flashIdx-1+flashFiltered.length)%flashFiltered.length;renderFlash();}
+function initQuiz(){
+  qIdx=0;qAnswers=new Array(QUIZ.length).fill(null);qCorrect=new Array(QUIZ.length).fill(null);
+  renderDots();renderQuestion();
+}
+function renderDots(){
+  document.getElementById('qDots').innerHTML=QUIZ.map((q,i)=>`<div class="qdot ${qAnswers[i]!==null?(qCorrect[i]?'correct':'wrong'):''} ${i===qIdx?'active':''}" onclick="goQ(${i})"></div>`).join('');
+  document.getElementById('qProgBar').style.width=((qAnswers.filter(a=>a!==null).length/QUIZ.length)*100)+'%';
+}
+function goQ(i){qIdx=i;renderQuestion();}
+function renderQuestion(){
+  const q=QUIZ[qIdx];
+  const answered=qAnswers[qIdx]!==null;
+  const diffMap={easy:'Fácil',med:'Medio',hard:'Difícil'};
+  const diffClass={easy:'q-diff-easy',med:'q-diff-med',hard:'q-diff-hard'};
+  let optsHtml=q.opts.map((o,i)=>{
+    let cls='opt';
+    if(answered){if(i===q.ans)cls+=' revealed';else if(i===qAnswers[qIdx]&&i!==q.ans)cls+=' wrong-ans';}
+    return `<button class="${cls}" onclick="answerQ(${i})" ${answered?'disabled':''}><div class="opt-letter">${o.l}</div><div class="opt-body"><div class="opt-main">${o.t}</div><div class="opt-comment">— ${o.c}</div></div></button>`;
+  }).join('');
+  let fbHtml='';
+  if(answered){
+    const ok=qCorrect[qIdx];
+    fbHtml=`<div class="feedback-box show ${ok?'fb-correct':'fb-wrong'}"><div class="fb-title">${ok?'✓ CORRECTO':'✗ INCORRECTO'}</div><div class="fb-text">${q.exp}</div><div class="trap-box"><div class="trap-title">⚠ TRAMPA</div><div class="trap-text">${q.trap}</div></div></div>`;
+  }
+  let navHtml=`<div class="quiz-nav">${qIdx>0?`<button class="btn btn-ghost" onclick="goQ(${qIdx-1})">← Anterior</button>`:''} ${answered&&qIdx<QUIZ.length-1?`<button class="btn btn-primary" onclick="goQ(${qIdx+1})">Siguiente →</button>`:''} ${answered&&qIdx===QUIZ.length-1&&qAnswers.every(a=>a!==null)?`<button class="btn btn-primary" onclick="showResults()">Ver resultados</button>`:''}</div>`;
+  document.getElementById('qContainer').innerHTML=`<div class="qcard"><div class="q-meta"><span class="q-num">PREGUNTA ${qIdx+1} / ${QUIZ.length}</span><span class="q-badge ${diffClass[q.diff]}">${diffMap[q.diff]}</span><span class="q-topic">${q.topic}</span></div><div class="q-intro">${q.intro}</div><div class="q-text">${q.q}</div><div class="opts">${optsHtml}</div>${fbHtml}${navHtml}</div>`;
+  renderDots();
+}
+function answerQ(i){if(qAnswers[qIdx]!==null)return;qAnswers[qIdx]=i;qCorrect[qIdx]=i===QUIZ[qIdx].ans;renderQuestion();}
+function showResults(){
+  const total=QUIZ.length;const correct=qCorrect.filter(Boolean).length;const pct=Math.round((correct/total)*100);
+  let reviewHtml=QUIZ.map((q,i)=>`<div class="review-item" style="background:${qCorrect[i]?'var(--greenBg)':'var(--redBg)'}"><span class="ri-icon">${qCorrect[i]?'✓':'✗'}</span><div class="ri-text"><strong>P${i+1} [${q.topic}]:</strong> ${q.q.substring(0,75)}... · <strong>Correcta: ${q.opts[q.ans].t.substring(0,55)}...</strong></div></div>`).join('');
+  document.getElementById('qContainer').innerHTML=`<div class="results-card"><div class="results-score">${pct}%</div><div class="results-label">${correct} de ${total} correctas</div><div class="results-breakdown"><div class="rb-item"><div class="rb-num" style="color:var(--green)">${correct}</div><div class="rb-lbl">Correctas</div></div><div class="rb-item"><div class="rb-num" style="color:var(--red)">${total-correct}</div><div class="rb-lbl">Incorrectas</div></div><div class="rb-item"><div class="rb-num" style="color:var(--amber)">${pct}%</div><div class="rb-lbl">Puntaje</div></div></div><div class="review-list">${reviewHtml}</div><div style="margin-top:20px"><button class="btn btn-primary" onclick="initQuiz()">Repetir quiz</button></div></div>`;
+  document.getElementById('qDots').innerHTML='';
+  document.getElementById('qProgBar').style.width='100%';
+}
+function toggleTheme(){
+  const isLight=document.body.classList.toggle('light');
+  document.getElementById('themeBtn').textContent=isLight?'🌙':'☀️';
+  localStorage.setItem('theme-area4',isLight?'light':'dark');
+}
+(function(){
+  if(localStorage.getItem('theme-area4')==='light'){document.body.classList.add('light');document.getElementById('themeBtn').textContent='🌙';}
+})();
+</script>
+</body>
+</html>
